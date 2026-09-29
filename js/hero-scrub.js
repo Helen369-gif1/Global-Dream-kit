@@ -23,10 +23,11 @@ function initHeroScrub(sectionEl) {
   const WORD_STAGGER = 0.03;
   const CTA_IN = 5.5;
 
-  // In / Out times in video seconds (build spec 5.1 table).
+  // In / Out times in video seconds (build spec 5.1 table). Out is the
+  // time each exit starts.
   const blocks = [
-    { el: sectionEl.querySelector(".gd-hero__block--1"), tIn: 0.0, tOut: 2.2 },
-    { el: sectionEl.querySelector(".gd-hero__block--2"), tIn: 3.0, tOut: 4.6 },
+    { el: sectionEl.querySelector(".gd-hero__block--1"), tIn: 0.0, tOut: 2.03 },
+    { el: sectionEl.querySelector(".gd-hero__block--2"), tIn: 3.0, tOut: 4.54 },
     { el: sectionEl.querySelector(".gd-hero__block--3"), tIn: 5.3, tOut: null }
   ];
 
@@ -61,9 +62,9 @@ function initHeroScrub(sectionEl) {
       block.tIn);
 
     if (block.tOut === null) return;
-    // A block must be fully gone before the next one enters, so its exit
-    // starts at the table's Out time or earlier if the staggered exit
-    // would otherwise still be running at the next block's In time.
+    // Each exit must finish by the next block's In time, so the exit starts
+    // at the table's Out time, or earlier if the staggered exit would
+    // otherwise still be running at the next In.
     const next = blocks[i + 1];
     const exitStart = Math.min(block.tOut, next.tIn - span(block.words.length));
     tl.fromTo(block.words,

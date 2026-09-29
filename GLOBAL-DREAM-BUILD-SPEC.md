@@ -109,7 +109,7 @@ Do not copy text, logos, or UI from `references/oceanx-*`. It is used only for m
 
 ### 4.1 Tokens
 
-Use the design system's `--gd-*` tokens (Section 3 of the design system) and, for Screen 2 only, the dark accent tokens in design-system Section 16. No raw colour values in screen CSS except inside `tokens.css`.
+Use the design system's `--gd-*` tokens (Section 3 of the design system) and the dark accent tokens in design-system Section 16, which are used only by Screen 2 and by the Screen 1 veil and text shadow (Section 5.1). No raw colour values in screen CSS except inside `tokens.css`.
 
 ### 4.2 Buttons
 
@@ -152,16 +152,20 @@ Copy below is final. Reproduce it verbatim.
 - Text is split into one `<span class="word">` per word and driven by one paused GSAP timeline via `.time(smoothed)`. Word tween: 0.7s, stagger 0.03s, in `y: 36 → 0` `power3.out`, out `y: 0 → −26` `power2.in`.
 - Block 1 starts appearing on page load without scroll (elapsed-since-load nudge capped at the fade duration, as in Global Reserve).
 
-**Light-theme legibility.** The footage is warm cream architecture with a bright sky arch, so text is dark, not white. A static veil sits above the video and below the text: `linear-gradient(to bottom, rgba(247,243,235,.78) 0%, rgba(247,243,235,.42) 34%, rgba(247,243,235,0) 58%)`. It does not animate. Text uses no text-shadow. Verify AA contrast on the first, middle, and last frames; if a frame fails, raise the veil's top alpha, not the text weight.
+**Legibility: dark veil, light text** (approved by the designer 2026-09-29; replaces the earlier ivory veil). A static dark veil built from `--gd-night` sits above the video and below the text: `linear-gradient(to bottom, rgba(21,24,28,.62) 0%, rgba(21,24,28,.56) 40%, rgba(21,24,28,.24) 55%, rgba(21,24,28,.16) 70%, rgba(21,24,28,.12) 100%)`. It does not animate. The veil must stay positioned above the media layer in the stacking order. Tuning limits: top alpha between `.45` and `.62`, bottom alpha at least `.10`, and the lower half of the frame stays visibly light. All Screen 1 text (`GIA`, the tagline, `Start with Gia.`, `Talk. Explore. Plan.`) is `--gd-surface` (`#FFFDF8`) with `text-shadow: 0 2px 24px rgba(21,24,28,.35)`, on Screen 1 text only. The `Meet Gia` button stays `.gd-button--primary`.
+
+Contrast targets, measured on glyph pixels of the light text over the rendered frame with the veil (text shadow excluded), at 1920, 1440, 1024, 768 and 375, on frames where each block is fully visible: `GIA` and blocks 2 and 3 at least 3:1, the tagline at least 4.5:1, each on at least 99% of glyph pixels. If the tagline fails, raise the veil within the limits above; if that is still not enough, move the text group higher at 1100px and below. The values above passed at every width (worst case: tagline at 1920, 99.8% of glyph pixels at 4.5:1 or more), so the text position is unchanged.
 
 **Copy and timing** (video time in seconds, 8.0s total):
 
 | Block | Element | Copy | Style | In | Out |
 |---|---|---|---|---:|---:|
-| 1 | H1 | `GIA` | Playfair Display 500, `clamp(72px, 9vw, 168px)`, line-height 1, letter-spacing `0.06em`, `--gd-text-primary` | 0.0 | 2.2 |
-| 1 | Tagline `<p>` | `Your AI for the life you want to build.` | Playfair Display 500, `clamp(22px, 2.2vw, 40px)`, line-height 1.3, `--gd-text-primary`, 16px below H1 | 0.0 | 2.2 |
-| 2 | `<p>` | `Start with Gia.` | Playfair Display 500, `clamp(34px, 3.8vw, 72px)`, line-height 1.15 | 3.0 | 4.6 |
+| 1 | H1 | `GIA` | Playfair Display 500, `clamp(72px, 9vw, 168px)`, line-height 1, letter-spacing `0.06em`, `--gd-surface` | 0.0 | 2.03 |
+| 1 | Tagline `<p>` | `Your AI for the life you want to build.` | Playfair Display 500, `clamp(22px, 2.2vw, 40px)`, line-height 1.3, `--gd-surface`, 16px below H1 | 0.0 | 2.03 |
+| 2 | `<p>` | `Start with Gia.` | Playfair Display 500, `clamp(34px, 3.8vw, 72px)`, line-height 1.15, `--gd-surface` | 3.0 | 4.54 |
 | 3 | `<p>` | `Talk. Explore. Plan.` | same as block 2 | 5.3 | — (holds) |
+
+In is the time a block's entrance starts. Out is the time its exit starts. Each exit must finish by the next block's In time: with the word tween (0.7s, stagger 0.03s), block 1's 10 words exit over 0.97s (2.03 → 3.00) and block 2's 3 words over 0.76s (4.54 → 5.30).
 | 3 | Button | `Meet Gia` | `.gd-button--primary`, 32px below block 3 text | 5.5 | — (holds) |
 
 - Block 1 fully exits before block 2 enters; block 2 fully exits before block 3 enters. No overlap.
@@ -169,9 +173,9 @@ Copy below is final. Reproduce it verbatim.
 - The button has `pointer-events: none` and `tabindex="-1"` while its opacity is below 0.5, and becomes interactive above it. Toggle via a class, not per frame style writes.
 - Screen reader text: the H1 contains `GIA`; add `aria-label` on nothing else. All three blocks remain in the DOM at all times.
 
-**Position.** All blocks share one centred column: `left: 50%; transform: translateX(-50%); width: min(80%, 1100px); text-align: center`. Top of the text group at `16%` of the stage height, which keeps text on the cream ceiling band and clear of the sky arch at every frame. Below 600px wide: `width: 88%`, top `18%`. Visually verify at 1920, 1440, 1024, 768, 375.
+**Position.** All blocks share one centred column: `left: 50%; transform: translateX(-50%); width: min(80%, 1100px); text-align: center`. Top of the text group at `16%` of the stage height, which keeps the text in the upper band where the dark veil is strongest. The contrast targets above pass at this position at every tested width, so no higher position is needed at 1100px and below. Below 600px wide: `width: 88%`, top `18%`. Visually verify at 1920, 1440, 1024, 768, 375.
 
-**Reduced motion.** No runway, no pin. Stage becomes `min-height: 100svh`, shows `gd-hero-poster.jpg` as a static cover image, veil unchanged, blocks 1 and 3 plus the button visible and stacked (block 2 hidden, since block 3 repeats its intent), no word animation.
+**Reduced motion.** No runway, no pin. Stage becomes `min-height: 100svh`, shows `gd-hero-poster.jpg` as a static cover image with the same dark veil and light text, blocks 1 and 3 plus the button visible and stacked with a 16px gap between blocks (block 2 hidden, since block 3 repeats its intent), no word animation. The tight stack keeps `Talk. Explore. Plan.` in the upper band where the veil is darkest; it meets 3:1 on at least 99% of glyph pixels at 1920, 1440, 1024, 768 and 375 (measured 100% at every width).
 
 **Missing video.** Show the poster as a static background; text timeline still runs on scroll.
 

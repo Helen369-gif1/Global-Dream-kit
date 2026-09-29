@@ -1,5 +1,6 @@
 /* Global Dream — design tokens.
-   Design system Section 3 (core) and Section 16.1 (dark accent, Screen 2 only).
+   Design system Section 3 (core) and Section 16.1 (dark accent: Screen 2
+   and the Screen 1 veil).
    Tokens only: no selectors other than :root. */
 
 :root {
@@ -61,7 +62,8 @@
   --gd-grid-gap: clamp(48px, 6vw, 96px);
 }
 
-/* Dark accent tokens — Screen 2 only (design system Section 16.1). */
+/* Dark accent tokens — used only by Screen 2 and the Screen 1 veil and
+   text shadow (design system Sections 16.1 and 16.4). */
 :root {
   --gd-night: #15181C;
   --gd-night-surface: #1E2328;

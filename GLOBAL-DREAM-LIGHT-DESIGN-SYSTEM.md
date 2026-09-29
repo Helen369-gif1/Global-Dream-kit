@@ -526,7 +526,7 @@ Approved by the designer on 2026-09-28. These exceptions apply only where stated
 
 One dark screen is permitted on the page, as a secondary accent. It is Screen 2 ("What Gia does"). No other section, card, or component may use a dark background, except the small dark chip permitted in 16.2.
 
-Add these tokens to `css/tokens.css` and use them only inside Screen 2:
+Add these tokens to `css/tokens.css`. They are used only by Screen 2 and by the Screen 1 legibility veil and text shadow (16.4):
 
 ```css
 :root {
@@ -557,7 +557,10 @@ A small label chip on top of photography or video may use `rgba(30, 35, 40, 0.55
 
 ### 16.4 Legibility veils over video
 
-Screens 1 and 4 use static or scroll-faded ivory veils (`rgba(247, 243, 235, …)` linear gradients) purely for text legibility over video. These are permitted under Section 8.3 ("unless required for text legibility") and are not decorative gradient fills. A veil must never cover Gia.
+Veils over video exist purely for text legibility. They are permitted under Section 8.3 ("unless required for text legibility") and are not decorative gradient fills. A veil must never cover Gia.
+
+- Screen 1 uses a static dark veil built from `--gd-night` (`rgba(21, 24, 28, …)` linear gradient, darkest at the top, the lower half of the frame kept visibly light) with light text in `--gd-surface` and a soft `--gd-night` text shadow. Approved by the designer on 2026-09-29, replacing the earlier ivory veil. This is a legibility veil, not a dark section; the dark-screen rule in 16.1 is unaffected. Exact values are in build spec Section 5.1.
+- Screen 4 keeps scroll-faded ivory veils (`rgba(247, 243, 235, …)` linear gradients) with dark text.
 
 ### 16.5 Pinned sections
 

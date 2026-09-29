@@ -45,15 +45,20 @@
   object-fit: cover;
 }
 
-/* Static legibility veil (build spec 5.1, design system 16.4). --gd-bg at
-   78% / 42% / 0% alpha. It never animates. */
+/* Static dark legibility veil (build spec 5.1, design system 16.4).
+   --gd-night at 62% / 56% / 24% / 16% / 12% alpha: dark behind the text
+   band, light in the lower half. It never animates. Positioned so it
+   paints above the positioned media layer. */
 .gd-hero__veil {
+  position: relative;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--gd-bg) 78%, transparent) 0%,
-    color-mix(in srgb, var(--gd-bg) 42%, transparent) 34%,
-    color-mix(in srgb, var(--gd-bg) 0%, transparent) 58%
+    color-mix(in srgb, var(--gd-night) 62%, transparent) 0%,
+    color-mix(in srgb, var(--gd-night) 56%, transparent) 40%,
+    color-mix(in srgb, var(--gd-night) 24%, transparent) 55%,
+    color-mix(in srgb, var(--gd-night) 16%, transparent) 70%,
+    color-mix(in srgb, var(--gd-night) 12%, transparent) 100%
   );
 }
 
@@ -66,7 +71,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--gd-space-5);
+  /* Tight stack keeps block 3 in the upper band where the veil is darkest. */
+  gap: var(--gd-space-2);
   width: min(80%, 1100px);
   margin-inline: auto;
   text-align: center;
@@ -91,13 +97,15 @@
   gap: var(--gd-space-4);
 }
 
-/* Playfair Display is declared here for Screen 1 only (no font token). */
+/* Playfair Display is declared here for Screen 1 only (no font token).
+   Light text on the dark veil; the shadow is Screen 1 only. */
 .gd-hero__title,
 .gd-hero__tagline,
 .gd-hero__phrase {
   font-family: "Playfair Display", serif;
   font-weight: 500;
-  color: var(--gd-text-primary);
+  color: var(--gd-surface);
+  text-shadow: 0 2px 24px color-mix(in srgb, var(--gd-night) 35%, transparent);
 }
 
 /* The start padding balances the trailing letter-spacing so GIA centres. */
