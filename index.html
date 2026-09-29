@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gia — Global Dream</title>
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="media/logo/favicon-32.png">
+  <link rel="apple-touch-icon" href="media/logo/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;700&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/screens.css">
+  <link rel="stylesheet" href="css/gia-story.css">
+  <link rel="stylesheet" href="css/site-shell.css">
+</head>
+<body>
+  <main>
+    <!-- Screen 1 — Hero / scroll video (build spec 5.1). Built in A2. -->
+    <section id="screen-1" class="gd-hero" data-screen="hero">
+      <h1>GIA</h1>
+    </section>
+
+    <!-- Screen 2 — What Gia does, dark accent (build spec 5.2). Built in A3. -->
+    <section id="screen-2" class="gd-section" data-screen="conversation" hidden>
+      <div class="gd-container">
+        <h2 class="gd-h2">One conversation can change what you see next.</h2>
+      </div>
+    </section>
+
+    <!-- Screen 3 — Everything connects (build spec 5.3). Built in A4. -->
+    <section id="screen-3" class="gd-section gd-section--soft" data-screen="connects" hidden>
+      <div class="gd-container">
+        <h2 class="gd-h2 gd-h2--large">Your life isn’t made of separate decisions.</h2>
+      </div>
+    </section>
+
+    <!-- Screen 4 — Gia in your life, horizontal story (build spec 5.4). Built in A5-A6. -->
+    <section id="screen-4" class="gd-story" data-screen="life" hidden>
+      <h2 class="visually-hidden">Gia in your life</h2>
+      <div id="screen-4-final" class="gd-story__final">
+        <h2 class="gd-h2 gd-h2--large">Start with Gia.</h2>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="js/hero-scrub.js"></script>
+  <script src="js/reveal.js"></script>
+  <script src="js/gia-conversation.js"></script>
+  <script src="js/gia-connect.js"></script>
+  <script src="js/gia-story.js"></script>
+  <script src="js/brochure.js"></script>
+  <script src="js/site-shell.js"></script>
+</body>
+</html>
