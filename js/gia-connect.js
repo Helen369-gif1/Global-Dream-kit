@@ -1,15 +1,16 @@
 /* Screen 3 life-area connection animation (build spec Section 5.3).
-   Draws one gentle cubic connector per life area, from the area's node to
-   an anchor on the tablet, into the stage SVG. Geometry is measured from
-   layout offsets (never transformed rects), on load, after the image and
-   fonts load, and on resize (debounced 150ms) - never per frame.
+   Draws one smooth S-curve per life area (horizontal tangents at both
+   ends; vertical for area 5) from the area node to a node on the tablet's
+   outer frame edge, into the stage SVG. Geometry is measured from layout
+   offsets (never transformed rects), on load, after the image and fonts
+   load, and on resize (debounced 150ms) - never per frame.
    When the stage is 30% visible, once: tablet, halo, live marker, then
-   the areas in order with their lines drawing in, then the text block via
-   the shared reveal. After that, ambient loops run while the section is
-   visible: live dot pulse, halo breathing, a particle along one connector
-   every 4s, and a tablet float. The SVG floats with the tablet, so the
-   tablet ends stay on the tablet and the area ends stay inside the 10px
-   nodes (the float is 4px, the node radius 5px): lines never detach.
+   per area in order: the area appears, its node scales in, its line draws
+   toward the tablet, and the tablet node pops in with one pulse. Then the
+   text block via the shared reveal. After that, ambient loops run while
+   the section is visible: live dot pulse, halo breathing, a particle along
+   one line every 4s, and a tablet float. The float redraws the tablet end
+   of every line from the cached geometry, so both ends stay attached.
    Under reduced motion, or without GSAP, everything is shown at rest. */
 
 function initGiaConnect(sectionEl) {
@@ -35,10 +36,10 @@ function initGiaConnect(sectionEl) {
   const SVG_NS = "http://www.w3.org/2000/svg";
   const ease = (t) => bezier(0.22, 0.61, 0.36, 1, t); // design-system ease
 
-  // Tablet screen area inside the image, and the anchors on it (spec 5.3).
-  const SCREEN = { left: 0.045, top: 0.052, width: 0.913, height: 0.895 };
-  const ANCHOR_UPPER = 0.34;
-  const ANCHOR_LOWER = 0.66;
+  // Tablet-node anchors as fractions of the tablet height (spec 5.3). The
+  // tablet's outer frame fills the image box, so its edges are the box edges.
+  const ANCHOR_UPPER = 0.36;
+  const ANCHOR_LOWER = 0.64;
 
   // ---------- Missing media ----------
 
@@ -50,21 +51,25 @@ function initGiaConnect(sectionEl) {
 
   // ---------- Geometry ----------
 
-  const lines = items.map(() => {
-    const path = document.createElementNS(SVG_NS, "path");
-    const end = document.createElementNS(SVG_NS, "circle");
-    path.setAttribute("class", "gd-connect__line");
-    path.setAttribute("pathLength", "1"); // dash values stay 0-1 at any size
-    end.setAttribute("class", "gd-connect__end");
-    end.setAttribute("r", "2");
-    svg.append(path, end);
-    return { path, end, length: 0 };
-  });
+  function svgEl(name, attrs) {
+    const el = document.createElementNS(SVG_NS, name);
+    Object.keys(attrs).forEach((key) => el.setAttribute(key, attrs[key]));
+    return el;
+  }
 
-  const particle = document.createElementNS(SVG_NS, "circle");
-  particle.setAttribute("class", "gd-connect__particle");
-  particle.setAttribute("r", "2");
-  particle.setAttribute("opacity", "0");
+  const lines = items.map(() => {
+    const path = svgEl("path", { class: "gd-connect__line", pathLength: "1" }); // dash values stay 0-1
+    const end = svgEl("g", {});
+    const pulse = svgEl("circle", { class: "gd-connect__end-pulse", r: "5" });
+    const dot = svgEl("circle", { class: "gd-connect__end-dot", r: "5" });
+    end.append(pulse, dot);
+    svg.append(path);
+    return { path, end, pulse, dot, from: null, to: null };
+  });
+  // Tablet nodes paint above every line.
+  lines.forEach((line) => svg.append(line.end));
+
+  const particle = svgEl("circle", { class: "gd-connect__particle", r: "2", opacity: "0" });
   svg.append(particle);
 
   // Position of el's layout box inside the stage, ignoring transforms.
@@ -85,6 +90,7 @@ function initGiaConnect(sectionEl) {
     return box ? { x: box.x + box.w / 2, y: box.y + box.h / 2 } : null;
   }
 
+  // S-curve with horizontal tangents at both ends (vertical for area 5).
   function curve(from, to, vertical) {
     if (vertical) {
       const dy = (to.y - from.y) / 2;
@@ -94,6 +100,17 @@ function initGiaConnect(sectionEl) {
     return `M${from.x} ${from.y} C${from.x + dx} ${from.y} ${to.x - dx} ${to.y} ${to.x} ${to.y}`;
   }
 
+  // Writes the cached geometry, with the tablet ends moved by the float.
+  let floatY = 0;
+  function draw() {
+    lines.forEach((line, i) => {
+      if (!line.from) return;
+      const to = { x: line.to.x, y: line.to.y + floatY };
+      line.path.setAttribute("d", curve(line.from, to, i === 4));
+      line.end.setAttribute("transform", `translate(${to.x} ${to.y})`);
+    });
+  }
+
   function measure() {
     if (stacked.matches) return;
     const f = offsetIn(frame);
@@ -101,10 +118,10 @@ function initGiaConnect(sectionEl) {
 
     svg.setAttribute("viewBox", `0 0 ${stage.offsetWidth} ${stage.offsetHeight}`);
 
-    const left = f.x + f.w * SCREEN.left;
-    const right = f.x + f.w * (SCREEN.left + SCREEN.width);
-    const upper = f.y + f.h * (SCREEN.top + SCREEN.height * ANCHOR_UPPER);
-    const lower = f.y + f.h * (SCREEN.top + SCREEN.height * ANCHOR_LOWER);
+    const left = f.x;
+    const right = f.x + f.w;
+    const upper = f.y + f.h * ANCHOR_UPPER;
+    const lower = f.y + f.h * ANCHOR_LOWER;
     const anchors = [
       { x: left, y: upper },
       { x: left, y: lower },
@@ -114,14 +131,10 @@ function initGiaConnect(sectionEl) {
     ];
 
     lines.forEach((line, i) => {
-      const from = centreOf(nodes[i]);
-      if (!from) return;
-      const to = anchors[i];
-      line.path.setAttribute("d", curve(from, to, i === 4));
-      line.end.setAttribute("cx", to.x);
-      line.end.setAttribute("cy", to.y);
-      line.length = line.path.getTotalLength();
+      line.from = centreOf(nodes[i]);
+      line.to = anchors[i];
     });
+    draw();
   }
 
   let resizeTimer = 0;
@@ -153,8 +166,10 @@ function initGiaConnect(sectionEl) {
   if (halo) gsap.set(halo, { opacity: 0 });
   if (live) gsap.set(live, { opacity: 0 });
   gsap.set(items, { opacity: 0 });
-  lines.forEach((line) => gsap.set(line.path, { strokeDashoffset: 1 }));
-  gsap.set(lines.map((line) => line.end), { opacity: 0 });
+  gsap.set(nodes, { scale: 0 });
+  lines.forEach((line) => gsap.set(line.path, { strokeDashoffset: 1, opacity: 0 }));
+  gsap.set(lines.map((line) => line.dot), { scale: 0, transformOrigin: "50% 50%" });
+  gsap.set(lines.map((line) => line.pulse), { transformOrigin: "50% 50%" });
 
   // Toward the tablet: sideways for areas 1-4, upward for area 5 and for
   // the stacked layout, where the tablet sits above the list.
@@ -180,9 +195,14 @@ function initGiaConnect(sectionEl) {
     if (halo) {
       ambient.push(gsap.to(halo, { scale: 1.04, duration: 3.5, ease: "sine.inOut", repeat: -1, yoyo: true }));
     }
-    // 0 -> -4px -> 0 over 8s; the SVG moves with the tablet.
-    ambient.push(gsap.to([floater, svg], {
-      y: -4, duration: 4, ease: "sine.inOut", repeat: -1, yoyo: true
+    // 0 -> -4px -> 0 over 8s; the tablet ends of the lines follow it.
+    ambient.push(gsap.to(floater, {
+      y: -4, duration: 4, ease: "sine.inOut", repeat: -1, yoyo: true,
+      onUpdate: () => {
+        if (stacked.matches) return;
+        floatY = gsap.getProperty(floater, "y");
+        draw();
+      }
     }));
 
     let next = 0;
@@ -196,8 +216,8 @@ function initGiaConnect(sectionEl) {
         t: 1, duration: 1.4, ease: "sine.inOut",
         onUpdate: () => {
           const line = carry.line;
-          if (!line || !line.length) return;
-          const pt = line.path.getPointAtLength(carry.t * line.length);
+          if (!line || !line.from) return;
+          const pt = line.path.getPointAtLength(carry.t * line.path.getTotalLength());
           particle.setAttribute("transform", `translate(${pt.x} ${pt.y})`);
           particle.setAttribute("opacity", Math.min(1, carry.t * 8, (1 - carry.t) * 8));
         }
@@ -223,11 +243,15 @@ function initGiaConnect(sectionEl) {
 
     items.forEach((item, i) => {
       const at = 0.9 + i * 0.24;
-      tl.fromTo(item, { opacity: 0, ...areaFrom(i) }, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: ease }, at);
-
       const line = lines[i];
-      tl.to(line.path, { strokeDashoffset: 0, duration: 0.7, ease: "power1.inOut" }, at + 0.15);
-      tl.to(line.end, { opacity: 1, duration: 0.2, ease: "none" }, at + 0.15 + 0.6);
+      const arrive = at + 0.6 + 0.7;
+
+      tl.fromTo(item, { opacity: 0, ...areaFrom(i) }, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: ease }, at);
+      tl.to(nodes[i], { scale: 1, duration: 0.25, ease: "back.out(2)" }, at + 0.45);
+      tl.set(line.path, { opacity: 1 }, at + 0.6);
+      tl.to(line.path, { strokeDashoffset: 0, duration: 0.7, ease: "power1.inOut" }, at + 0.6);
+      tl.to(line.dot, { scale: 1, duration: 0.3, ease: "back.out(2.5)" }, arrive);
+      tl.fromTo(line.pulse, { scale: 1, opacity: 0.6 }, { scale: 2.4, opacity: 0, duration: 0.6, ease: "power1.out", immediateRender: false }, arrive);
     });
 
     tl.call(() => initReveal(sectionEl.querySelector(".gd-connect__text")), null, 2.4);

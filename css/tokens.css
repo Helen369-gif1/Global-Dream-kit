@@ -36,6 +36,7 @@
   --gd-line: #D8CDBE;
   --gd-line-soft: rgba(91, 72, 49, 0.12);
   --gd-shadow-soft: 0 14px 40px rgba(57, 43, 24, 0.08);
+  --gd-shadow-tablet: 0 24px 48px rgba(57, 43, 24, 0.14); /* drop-shadow() on the Screen 3 tablet image */
 
   /* Type — unchanged */
   --gd-font-ui: "IBM Plex Sans", system-ui, sans-serif;

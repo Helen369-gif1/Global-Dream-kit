@@ -428,8 +428,11 @@
    tablet by grid-area name and are never positioned absolutely.
    ========================================================================== */
 
-/* Clips the halo on narrow screens. No sticky stage lives inside Screen 3. */
+/* Clips the halo on narrow screens. No sticky stage lives inside Screen 3.
+   The glow colour is shared by the lines, the nodes and the orbit dot
+   (design system 16.9). */
 .gd-connect {
+  --gd-connect-glow: color-mix(in srgb, var(--gd-gold) 35%, transparent);
   overflow-x: clip;
 }
 
@@ -440,15 +443,16 @@
 }
 
 /* ---------- Connection stage ----------
-   The tablet spans rows 1-5. The flexible rows (2fr / 1fr / 2fr) put the
-   centres of areas 1-4 near 36% and 64% of the tablet height, close to the
-   screen-edge anchors. Area 5 sits in row 6, 32px below the tablet. */
+   The tablet spans rows 1-5. The flexible rows (1fr / 1fr / 3fr) put the
+   icons of areas 1-4 near 17% and 53% of the tablet height, above the
+   frame-edge anchors at 36% and 64%, so each line is a visible S-curve
+   (as in the mockup). Area 5 sits in row 6, 32px below the tablet. */
 
 .gd-connect__stage {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, clamp(320px, 42vw, 560px)) minmax(0, 1fr);
-  grid-template-rows: 2fr auto 1fr auto 2fr auto;
+  grid-template-rows: 1fr auto 1fr auto 3fr auto;
   grid-template-areas:
     ".      tablet .     "
     "area-1 tablet area-3"
@@ -482,7 +486,48 @@
   pointer-events: none;
 }
 
-/* Positioned so it paints above the halo. */
+/* Orbit decoration (design system 16.9): a static dotted ellipse around
+   the tablet with a few gold specks. It sits outside .gd-connect__float,
+   so it never floats, and paints below the tablet and the lines. */
+.gd-connect__orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 136%;
+  height: 118%;
+  transform: translate(-50%, -50%);
+  border: 1px dotted var(--gd-gold-line);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.gd-connect__orbit-top,
+.gd-connect__speck {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gd-gold);
+}
+
+.gd-connect__orbit-top {
+  top: 0;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  box-shadow: 0 0 6px var(--gd-connect-glow);
+}
+
+/* Position, size and opacity come from inline --x, --y, --s, --o. */
+.gd-connect__speck {
+  top: var(--y);
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  opacity: var(--o);
+}
+
+/* Positioned so it paints above the halo and the orbit. */
 .gd-connect__float {
   position: relative;
 }
@@ -496,7 +541,7 @@
 .gd-connect__image {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 24px 48px rgba(57, 43, 24, 0.14));
+  filter: drop-shadow(var(--gd-shadow-tablet));
 }
 
 /* Tablet screen area inside the image (build spec 5.3). */
@@ -564,8 +609,10 @@
 }
 
 /* ---------- Connector lines ----------
-   Paints above the tablet (the lines end on the screen edge, over the
-   bezel) and below the area nodes (the lines start at the node centres). */
+   Paints above the tablet (the tablet nodes sit half over the frame) and
+   below the area nodes (the lines start at the node centres). One
+   drop-shadow on the SVG gives the lines, tablet nodes and particle their
+   soft gold glow. */
 
 .gd-connect__lines {
   position: absolute;
@@ -576,18 +623,34 @@
   max-width: none;
   overflow: visible;
   pointer-events: none;
+  filter: drop-shadow(0 0 4px var(--gd-connect-glow));
 }
 
 /* pathLength="1" on each path, so the draw is a 1 -> 0 dash offset. */
 .gd-connect__line {
   fill: none;
-  stroke: var(--gd-gold-line);
-  stroke-width: 1;
+  stroke: var(--gd-gold);
+  stroke-width: 2;
+  stroke-linecap: round;
   stroke-dasharray: 1 1;
   stroke-dashoffset: 0;
 }
 
-.gd-connect__end,
+/* Tablet node: 12px ringed dot (r 5 + 2px ring), centred on the frame edge. */
+.gd-connect__end-dot {
+  fill: var(--gd-surface);
+  stroke: var(--gd-gold);
+  stroke-width: 2;
+}
+
+/* One ring pulse when the line arrives; invisible at rest. */
+.gd-connect__end-pulse {
+  fill: none;
+  stroke: var(--gd-gold);
+  stroke-width: 1.5;
+  opacity: 0;
+}
+
 .gd-connect__particle {
   fill: var(--gd-gold);
 }
@@ -619,34 +682,88 @@
 .gd-areas__item--4 { grid-area: area-4; }
 .gd-areas__item--5 { grid-area: area-5; }
 
-/* Left column: right-aligned, node on the side facing the tablet. */
+/* Areas 1-4: icon above the label, centred on it; the areas sit at the
+   outer edges of the side columns, as in the mockup, which leaves room
+   for the S-curves. Area 5 below the tablet: node above the label. */
+.gd-areas__item--1,
+.gd-areas__item--2,
+.gd-areas__item--3,
+.gd-areas__item--4,
+.gd-areas__item--5 {
+  flex-direction: column;
+  text-align: center;
+}
+
 .gd-areas__item--1,
 .gd-areas__item--2 {
-  flex-direction: row-reverse;
-  justify-self: end;
-  text-align: right;
+  justify-self: start;
 }
 
 .gd-areas__item--3,
 .gd-areas__item--4 {
-  justify-self: start;
+  justify-self: end;
 }
 
-/* Below the tablet: centred, node on top. */
 .gd-areas__item--5 {
-  flex-direction: column;
   justify-self: center;
   margin-top: var(--gd-space-4);
-  text-align: center;
 }
 
-.gd-areas__node {
+/* Icon circle (design system 16.9). */
+.gd-areas__icon {
+  position: relative;
   flex: none;
-  width: 10px;
-  height: 10px;
-  border: 1px solid var(--gd-gold-deep);
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--gd-gold);
   border-radius: 50%;
-  background: var(--gd-gold);
+  background: radial-gradient(closest-side, var(--gd-surface), var(--gd-gold-soft));
+  box-shadow: 0 0 24px 6px var(--gd-gold-soft);
+}
+
+.gd-areas__icon svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--gd-gold-deep);
+}
+
+/* Area node: 12px ringed dot, 14px outside the icon circle on the side
+   facing the tablet, level with the icon centre. The line starts at its
+   centre, under it. */
+.gd-areas__node {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border: 2px solid var(--gd-gold);
+  border-radius: 50%;
+  background: var(--gd-surface);
+  box-shadow: 0 0 6px var(--gd-connect-glow);
+}
+
+.gd-areas__item--1 .gd-areas__node,
+.gd-areas__item--2 .gd-areas__node {
+  left: calc(100% + 14px);
+}
+
+.gd-areas__item--3 .gd-areas__node,
+.gd-areas__item--4 .gd-areas__node {
+  right: calc(100% + 14px);
+}
+
+/* Area 5 keeps a larger glowing node, in flow above its label. */
+.gd-areas__node--next {
+  position: relative;
+  top: auto;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 0;
+  background: radial-gradient(circle, var(--gd-gold) 0 3.5px, var(--gd-surface) 4px);
+  box-shadow: 0 0 0 6px var(--gd-gold-soft), 0 0 12px var(--gd-connect-glow);
 }
 
 .gd-areas__title {
@@ -674,9 +791,14 @@
 
 /* ---------- Screen 3 responsive ---------- */
 
-/* Two rows: the tablet, then the areas as a list under a 1px rule. The
-   connector lines are replaced by the nodes alone. */
+/* Two rows: the tablet, then the areas as a list under a 1px rule, each
+   with its icon (area 5: its node) left of the label. The lines, their
+   nodes and the orbit are hidden. */
 @media (max-width: 1100px) {
+  .gd-connect__orbit {
+    display: none;
+  }
+
   .gd-connect__stage {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto;
@@ -719,6 +841,25 @@
 
   .gd-areas__item--5 {
     grid-column: 1 / -1;
+  }
+
+  .gd-areas__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .gd-areas__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .gd-areas__icon .gd-areas__node {
+    display: none;
+  }
+
+  /* Centred in a 48px slot so the area 5 label lines up with the others. */
+  .gd-areas__node--next {
+    margin-inline: 14px;
   }
 }
 
