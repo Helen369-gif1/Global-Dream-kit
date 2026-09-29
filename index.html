@@ -21,9 +21,32 @@
 </head>
 <body>
   <main>
-    <!-- Screen 1 — Hero / scroll video (build spec 5.1). Built in A2. -->
+    <!-- Screen 1 — Hero / scroll video (build spec 5.1). -->
     <section id="screen-1" class="gd-hero" data-screen="hero">
-      <h1>GIA</h1>
+      <div class="gd-hero__runway">
+        <div class="gd-hero__stage">
+          <div class="gd-hero__media">
+            <video class="gd-hero__video" data-src="media/gd-hero.mp4" poster="media/gd-hero-poster.jpg" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+          </div>
+          <div class="gd-hero__veil" aria-hidden="true"></div>
+          <div class="gd-hero__text">
+            <div class="gd-hero__column">
+              <div class="gd-hero__block gd-hero__block--1">
+                <h1 class="gd-hero__title" data-split>GIA</h1>
+                <p class="gd-hero__tagline" data-split>Your AI for the life you want to build.</p>
+              </div>
+              <div class="gd-hero__block gd-hero__block--2">
+                <p class="gd-hero__phrase" data-split>Start with Gia.</p>
+              </div>
+              <div class="gd-hero__block gd-hero__block--3">
+                <p class="gd-hero__phrase" data-split>Talk. Explore. Plan.</p>
+                <!-- TODO: destination for Meet Gia (build spec Appendix B, item 1) -->
+                <a class="gd-button gd-button--primary gd-hero__cta" href="#">Meet Gia</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Screen 2 — What Gia does, dark accent (build spec 5.2). Built in A3. -->
