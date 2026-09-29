@@ -49,10 +49,47 @@
       </div>
     </section>
 
-    <!-- Screen 2 — What Gia does, dark accent (build spec 5.2). Built in A3. -->
-    <section id="screen-2" class="gd-section" data-screen="conversation" hidden>
-      <div class="gd-container">
-        <h2 class="gd-h2">One conversation can change what you see next.</h2>
+    <!-- Screen 2 — What Gia does, dark accent (build spec 5.2). -->
+    <section id="screen-2" class="gd-section gd-conversation" data-screen="conversation">
+      <div class="gd-container gd-conversation__grid">
+        <div class="gd-conversation__text">
+          <h2 class="gd-h2 gd-conversation__title" data-reveal>One conversation can change what you see next.</h2>
+          <p class="gd-lead gd-conversation__body" data-reveal data-reveal-delay="1">Gia helps you make sense of where you are, what you want, and what your next step could be.</p>
+          <div class="gd-conversation__closing" data-reveal data-reveal-delay="2">
+            <p class="gd-body gd-conversation__line">You don’t need to know where to start.</p>
+            <p class="gd-body gd-conversation__line gd-conversation__line--accent">You can start with Gia.</p>
+          </div>
+          <div class="gd-conversation__actions" data-reveal data-reveal-delay="3">
+            <!-- TODO: destination for Talk to Gia (build spec Appendix B, item 1) -->
+            <a class="gd-button gd-button--primary gd-button--on-dark" href="#">Talk to Gia</a>
+          </div>
+        </div>
+
+        <div class="gd-conversation__rail">
+          <div class="gd-rail__track" aria-hidden="true">
+            <span class="gd-rail__fill"></span>
+            <span class="gd-rail__runner gd-rail__runner--trail"></span>
+            <span class="gd-rail__runner"></span>
+          </div>
+          <ol class="gd-rail">
+            <li class="gd-rail__item">
+              <span class="gd-rail__node" aria-hidden="true">01</span>
+              <h3 class="gd-h3 gd-rail__phrase">Ask a question.</h3>
+            </li>
+            <li class="gd-rail__item">
+              <span class="gd-rail__node" aria-hidden="true">02</span>
+              <h3 class="gd-h3 gd-rail__phrase">Explore an idea.</h3>
+            </li>
+            <li class="gd-rail__item">
+              <span class="gd-rail__node" aria-hidden="true">03</span>
+              <h3 class="gd-h3 gd-rail__phrase">Compare possibilities.</h3>
+            </li>
+            <li class="gd-rail__item">
+              <span class="gd-rail__node" aria-hidden="true">04</span>
+              <h3 class="gd-h3 gd-rail__phrase">Build a plan.</h3>
+            </li>
+          </ol>
+        </div>
       </div>
     </section>
 

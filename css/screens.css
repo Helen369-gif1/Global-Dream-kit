@@ -195,3 +195,225 @@
     top: 18%;
   }
 }
+
+/* ==========================================================================
+   Screen 2 — What Gia does, dark accent (build spec Section 5.2)
+
+   The page's single dark screen: dark tokens from design system 16.1 only.
+   The default rules are the complete composition (gold line full, nodes
+   active, phrases visible). Once reveal.js has put .js on <html>, the rail
+   starts empty and gia-conversation.js builds it; it adds .is-complete when
+   done, or straight away under reduced motion or without GSAP.
+   ========================================================================== */
+
+.gd-conversation {
+  background: var(--gd-night);
+  color: var(--gd-night-text-2);
+}
+
+.gd-conversation__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--gd-grid-gap);
+  align-items: center;
+}
+
+.gd-conversation__grid > * {
+  min-width: 0;
+}
+
+.gd-conversation__title {
+  color: var(--gd-night-text);
+}
+
+.gd-conversation__body {
+  max-width: 520px;
+  margin-top: var(--gd-space-3);
+  color: var(--gd-night-text-2);
+}
+
+.gd-conversation__closing {
+  margin-top: var(--gd-space-5);
+}
+
+.gd-conversation__line {
+  color: var(--gd-night-text);
+}
+
+.gd-conversation__line--accent {
+  font-weight: 600;
+  color: var(--gd-gold);
+}
+
+.gd-conversation__actions {
+  margin-top: var(--gd-space-4);
+}
+
+/* ---------- Conversation rail ---------- */
+
+.gd-conversation__rail {
+  position: relative;
+}
+
+/* The track runs from the centre of node 1 to the centre of node 4.
+   The top and bottom here fit single-line rows; gia-conversation.js
+   measures the node centres and sets the exact top and height. */
+.gd-rail__track {
+  position: absolute;
+  top: 16px;
+  bottom: 16px;
+  left: 15.5px;
+  width: 1px;
+  background: var(--gd-night-line);
+  pointer-events: none;
+}
+
+.gd-rail__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--gd-gold);
+  transform-origin: 50% 0;
+}
+
+/* Ambient dot: each runner is as tall as the track and carries its dot at
+   its top edge, so translating a runner by 100% of its own height moves
+   the dot from node 1 to node 4 at any rail size. */
+.gd-rail__runner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  opacity: 0;
+}
+
+.gd-rail__runner::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -2.5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gd-gold);
+}
+
+/* Nodes paint above the track and the ambient dot. */
+.gd-rail {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  row-gap: 40px;
+}
+
+.gd-rail__item {
+  display: flex;
+  align-items: center;
+  gap: var(--gd-space-4);
+}
+
+.gd-rail__node {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--gd-night-line);
+  border-radius: 50%;
+  background: var(--gd-night-surface);
+  color: var(--gd-night-text-3);
+  font-family: var(--gd-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    color 300ms ease;
+}
+
+.gd-rail__phrase {
+  min-width: 0;
+  color: var(--gd-night-text);
+  transition:
+    opacity 600ms cubic-bezier(.22, .61, .36, 1),
+    transform 600ms cubic-bezier(.22, .61, .36, 1);
+}
+
+/* Active node: gold fill, index in --gd-night. Complete by default. */
+.gd-rail__node,
+.js .gd-rail__item.is-active .gd-rail__node {
+  background: var(--gd-gold);
+  border-color: var(--gd-gold);
+  color: var(--gd-night);
+}
+
+/* Starting state, only when JavaScript runs. */
+.js .gd-conversation__rail:not(.is-complete) .gd-rail__fill {
+  transform: scaleY(0);
+}
+
+.js .gd-rail__node {
+  background: var(--gd-night-surface);
+  border-color: var(--gd-night-line);
+  color: var(--gd-night-text-3);
+}
+
+.js .gd-rail__phrase {
+  opacity: 0;
+  transform: translateX(-12px);
+}
+
+.js .gd-rail__item.is-active .gd-rail__phrase {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .gd-conversation__rail:not(.is-complete) .gd-rail__fill,
+  .js .gd-rail__phrase {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js .gd-rail__node {
+    background: var(--gd-gold);
+    border-color: var(--gd-gold);
+    color: var(--gd-night);
+  }
+
+  .gd-rail__node,
+  .gd-rail__phrase {
+    transition: none;
+  }
+
+  .gd-rail__runner {
+    display: none;
+  }
+}
+
+/* ---------- Screen 2 responsive ----------
+   Two columns only while each column is at least 360px: with the page
+   padding (3.5vw) and grid gap (6vw, min 48px), that holds down to 828px.
+   Below it the columns stack, text first, rail 48px after it. */
+
+@media (max-width: 827px) {
+  .gd-conversation__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gd-space-5);
+  }
+}
+
+@media (max-width: 768px) {
+  .gd-rail {
+    row-gap: 28px;
+  }
+
+  .gd-rail__item {
+    gap: 20px;
+  }
+
+  .gd-conversation__actions .gd-button {
+    width: 100%;
+  }
+}
