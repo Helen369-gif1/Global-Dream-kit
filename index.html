@@ -20,6 +20,33 @@
   <link rel="stylesheet" href="css/site-shell.css">
 </head>
 <body>
+  <!-- Global site shell — header (build spec 5.5). -->
+  <header class="gd-header">
+    <div class="gd-container gd-header__bar">
+      <a class="gd-header__brand" href="#screen-1" aria-label="Glonari Global Dream">
+        <picture>
+          <source media="(max-width: 359px)" srcset="media/logo/gd-emblem-light.webp" width="416" height="416">
+          <img src="media/logo/gd-lockup-light.webp" alt="" width="915" height="393">
+        </picture>
+      </a>
+      <nav class="gd-header__nav" id="gd-header-menu">
+        <ul class="gd-header__links">
+          <li><a class="gd-header__link" href="#screen-1">Meet Gia</a></li>
+          <li><a class="gd-header__link" href="#screen-2">How she helps</a></li>
+          <li><a class="gd-header__link" href="#screen-3">Everything connects</a></li>
+          <li><a class="gd-header__link" href="#screen-4">In your life</a></li>
+        </ul>
+      </nav>
+      <div class="gd-header__actions">
+        <!-- TODO: destination for Talk to Gia (build spec Appendix B, item 1) -->
+        <a class="gd-button gd-button--primary gd-header__action" href="#">Talk to Gia</a>
+        <button type="button" class="gd-header__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="gd-header-menu">
+          <span class="gd-header__toggle-lines" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
   <main>
     <!-- Screen 1 — Hero / scroll video (build spec 5.1). -->
     <section id="screen-1" class="gd-hero" data-screen="hero">
@@ -483,6 +510,23 @@
       </dialog>
     </section>
   </main>
+
+  <!-- Global site shell — footer (build spec 5.5). -->
+  <footer class="gd-footer">
+    <div class="gd-container gd-footer__inner">
+      <img class="gd-footer__logo" src="media/logo/gd-lockup-light.webp" alt="Glonari Global Dream" width="915" height="393" loading="lazy" decoding="async">
+      <ul class="gd-footer__links">
+        <li><a class="gd-footer__link" href="#screen-1">Meet Gia</a></li>
+        <li><a class="gd-footer__link" href="#screen-2">How she helps</a></li>
+        <li><a class="gd-footer__link" href="#screen-3">Everything connects</a></li>
+        <li><a class="gd-footer__link" href="#screen-4">In your life</a></li>
+      </ul>
+      <div class="gd-footer__legal">
+        <!-- TODO: copy needed — legal line -->
+        <p>© 2026 Global Dream</p>
+      </div>
+    </div>
+  </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="js/hero-scrub.js"></script>
