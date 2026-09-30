@@ -59,6 +59,7 @@ Everything below is already prepared in the repository.
 /references/gd-hero-contact-sheet.jpg               Screen 1 video overview
 /references/gd-walk-contact-sheet.jpg               Screen 4 video overview
 /references/gia-tablet-source.png                   Original tablet image with grey studio background
+/references/screen-3-target.png                     Screen 3 approved visual target (icons, glowing lines, orbit)
 /references/digital-banker-reference.png            Digital Banker dark visual reference (Screen 2 atmosphere)
 /references/oceanx-brochure-panel.png                Screen 4 brochure panel reference (open chapter on the reference site)
 /references/gia-brochure-source.pdf                 The Gia brochure — source of all brochure copy and images
@@ -229,12 +230,14 @@ Reduced motion: rail complete (gold line full, all nodes active, all phrases vis
 - `alt="Gia on a video call, speaking and gesturing as she explains"`, `width="1279" height="1062"`, `loading="lazy"`, `decoding="async"`.
 - The screen area of the tablet inside the image is approximately `left 4.5%, top 5.2%, width 91.3%, height 89.5%`. Overlays placed "on the screen" use these percentages on a wrapper that matches the image box exactly.
 - The image contains baked call controls, including a red end-call button. This is an approved asset exception (design-system Section 16.3). Never add other red to the page, and never place overlays over the bottom 16% of the screen area where the controls sit.
-- Depth: `filter: drop-shadow(0 24px 48px rgba(57, 43, 24, 0.14))` on the image. No other shadow on this screen.
+- Depth: `filter: drop-shadow(var(--gd-shadow-tablet))` on the image (`0 24px 48px rgba(57, 43, 24, 0.14)`). This is the screen's only drop shadow; the soft gold glows of the connection visuals (design-system Section 16.9) are the only other depth effects.
+
+**Visual target.** `references/screen-3-target.png` (approved mockup, reworked in A4).
 
 **Layout.** `gd-section gd-section--soft` (background `--gd-bg-soft`, the light alternate, which separates it from the ivory Screen 4 poster edge and the dark Screen 2).
 
 1. Centred header, max-width 720px: H2.
-2. The connection stage, 64–96px below the header, full container width: a 3-column grid `minmax(0, 1fr) minmax(0, clamp(320px, 42vw, 560px)) minmax(0, 1fr)`, gap 48px. Centre column: the tablet. Left column: life areas 1 and 2, stacked, vertically distributed around the tablet's upper and lower thirds, right-aligned. Right column: areas 3 and 4, mirrored, left-aligned. Area 5 sits centred below the tablet, spanning the centre column, 32px below it.
+2. The connection stage, 64–96px below the header, full container width: a 3-column grid `minmax(0, 1fr) minmax(0, clamp(320px, 42vw, 560px)) minmax(0, 1fr)`, column gap 48px, rows `1fr auto 1fr auto 3fr auto`. Centre column: the tablet, spanning rows 1–5. Areas 1 and 2 sit in rows 2 and 4 of the left column at its outer (left) edge; areas 3 and 4 mirror them at the outer (right) edge of the right column. The flexible rows put the icons of areas 1–4 near 17% and 53% of the tablet height, above the tablet attachment points, so every line is a visible S-curve. Area 5 sits in row 6, centred under the tablet, 32px below it.
 3. Text block, centred as a block (max-width 560px), left-aligned text, 64px below the stage: body paragraph 1, body paragraph 2, key line, button.
 
 | Element | Copy | Style |
@@ -250,9 +253,15 @@ Reduced motion: rail complete (gold line full, all nodes active, all phrases vis
 | Key line | `One place to understand what’s possible.` | Large data phrase, `--gd-gold-deep`, 32px below body 2 |
 | Button | `Explore with Gia` | `.gd-button--primary`, 32px below key line |
 
-The five areas are an `<ul class="gd-areas">` for semantics even though CSS places them around the tablet (use `grid-area` names; do not position them absolutely). Each area has a 10px gold node (`--gd-gold`, 1px `--gd-gold-deep` border) on the side facing the tablet.
+The five areas are an `<ul class="gd-areas">` for semantics even though CSS places them around the tablet: the list spans the whole stage and uses `grid-template-columns: subgrid; grid-template-rows: subgrid`, and each item is placed by `grid-area` name (never positioned absolutely).
 
-**Connector lines.** One absolutely positioned decorative SVG (`aria-hidden="true"`, `pointer-events: none`) covers the stage. `js/gia-connect.js` measures each area node and the tablet's screen-edge anchor points (left edge at 34% and 66% of the screen height for areas 1–2, right edge likewise for 3–4, bottom-centre of the tablet frame for 5) and draws one gentle cubic curve per area in `--gd-gold-line`, 1px, with a 4px gold dot at the tablet end. Recompute on resize (debounced, 150ms) and after the image loads. Never recompute during an animation frame.
+**Areas 1–4.** Each item is a centred column: an icon circle above its H3 label, 16px gap. The icon circle (`.gd-areas__icon`, `aria-hidden`) is 64px, 1px `--gd-gold` border, a `radial-gradient(closest-side, var(--gd-surface), var(--gd-gold-soft))` fill and a soft gold glow, holding a 28px inline-SVG glyph filled `--gd-gold-deep`: a house (`A home.`), a stack of coins (`Money.`), a map pin (`A move.`), a briefcase (`Business.`). Each icon circle carries its area node: a 12px ringed dot (2px `--gd-gold` border, `--gd-surface` fill, soft gold glow), centred 14px outside the circle on the side facing the tablet, level with the icon centre.
+
+**Area 5.** No icon. A larger 20px node in flow above the label: a 7px `--gd-gold` centre on `--gd-surface`, 2px `--gd-gold` ring, a 6px `--gd-gold-soft` halo ring and a soft gold glow.
+
+**Orbit decoration.** A static dotted ellipse (`aria-hidden`) centred on the tablet, 136% × 118% of the tablet box, 1px dotted `--gd-gold-line`, with a 6px glowing `--gd-gold` dot at its top and seven small `--gd-gold` specks (3–4px, 30–45% opacity) placed along and around it. It sits outside the floating tablet group, so it never floats, and paints below the tablet and the lines. Hidden at 1100px and below.
+
+**Connector lines.** One absolutely positioned decorative SVG (`aria-hidden="true"`, `pointer-events: none`) covers the stage, above the tablet and below the areas. `js/gia-connect.js` measures, from layout offsets (never transformed rects), each area node's centre and five attachment points on the tablet's outer frame edge (the frame fills the image box): left edge at 36% and 64% of the tablet height for areas 1 and 2, right edge at 36% and 64% for areas 3 and 4, bottom centre for area 5. It draws one cubic S-curve per area from the area node to its attachment point, with horizontal tangents at both ends (vertical for area 5), `--gd-gold`, 2px, round caps, with a soft gold glow (one `drop-shadow` on the SVG, which also glows the tablet nodes and the particle). Each line has a node at both ends: the area node at the area end (HTML, painted above the line) and a tablet node at the attachment point (SVG, 12px ringed dot matching the area node, centred on the frame edge, painted above every line), plus an invisible pulse ring behind the tablet node. Recompute on load, after the image and fonts load, and on resize (debounced, 150ms). Never recompute during an animation frame.
 
 **Animation** (`initGiaConnect(section)`), triggered once when the stage is 30% visible:
 
@@ -260,22 +269,22 @@ The five areas are an `<ul class="gd-areas">` for semantics even though CSS plac
 |---:|---|
 | 0.0s | Tablet: `opacity 0 → 1`, `y: 24 → 0`, 800ms, design-system ease |
 | 0.3s | Soft halo behind the tablet fades in: an ellipse `radial-gradient(closest-side, var(--gd-gold-soft), transparent)` sized 120% × 110% of the tablet, `aria-hidden` |
-| 0.6s | "Live" marker on the tablet screen, top-left inside the screen area (24px inset): a 12px mono label `GIA` next to an 8px `--gd-gold` dot, on a `rgba(30,35,40,.55)` rounded-4px chip. Fades in 300ms. |
-| 0.9s–2.1s | Areas appear one at a time in order 1, 2, 3, 4, 5, stagger 240ms: area `opacity 0 → 1`, `x: ±16 → 0` (toward the tablet), 600ms; its connector line draws from the area to the tablet with `stroke-dashoffset`, 700ms, starting 150ms after its area |
-| 2.4s | Text block reveals (shared reveal, delays 0–3) |
+| 0.6s | "Live" marker on the tablet screen, top-left inside the screen area (24px inset): a 12px mono label `GIA` next to an 8px `--gd-gold` dot, on a `rgba(30,35,40,.55)` rounded-4px chip, 26px tall. Fades in 300ms. |
+| 0.9s–3.8s | Per area, in order 1, 2, 3, 4, 5, each starting 240ms after the previous (area `n` starts at `t = 0.9 + 0.24 × (n − 1)` s): at `t` the area appears, `opacity 0 → 1`, `x: ±16 → 0` toward the tablet (area 5: `y: 16 → 0`), 600ms, design-system ease; at `t + 0.45` its area node scales `0 → 1`, 250ms, `back.out(2)`; at `t + 0.6` its line draws from the area toward the tablet with `stroke-dashoffset`, 700ms, `power1.inOut`; at `t + 1.3`, when the line arrives, the tablet node pops in (`scale 0 → 1`, 300ms, `back.out(2.5)`) with one pulse ring (`scale 1 → 2.4`, `opacity 0.6 → 0`, 600ms) |
+| 2.4s | Text block reveals (shared reveal, delays 0–3), while the last areas are still connecting |
 
 Ambient (after the sequence, while visible, paused off-screen):
 
 - The live dot pulses: `opacity 1 → 0.35 → 1`, 2.4s, infinite.
 - The halo breathes: `scale 1 → 1.04 → 1`, 7s, infinite, `ease-in-out`.
-- Every 4s one connector carries a 4px gold particle from its area to the tablet (1.4s, `ease-in-out`), cycling through areas 1→5. Implemented with `getPointAtLength` on the existing path; transform only.
-- Tablet floats `y: 0 → −4px → 0`, 8s, infinite. Connector end-points follow the float by being drawn to anchors inside a shared transformed group, or by pausing the float; choose whichever keeps lines attached. Lines must never detach visibly.
+- Every 4s one connector carries a 6px `--gd-gold` particle from its area to the tablet (1.4s, `ease-in-out`), cycling through areas 1→5, fading in and out at the ends of the path. Implemented with `getPointAtLength` on the existing path; transform and opacity only. (6px rather than 4px: a 4px particle barely shows on the 2px line.)
+- Tablet floats `y: 0 → −4px → 0`, 8s, infinite. On every float update the tablet end of each line and its tablet node are redrawn from the cached geometry plus the float offset, so both ends stay attached. Lines never detach visibly.
 
-Reduced motion: everything at rest and visible, lines fully drawn, no halo breathing, no particle, no float, live dot static.
+Reduced motion: everything at rest and visible, lines fully drawn, all nodes visible, no pulse, no halo breathing, no particle, no float, live dot static.
 
 **Responsive.**
 
-- 1100px and below: stage becomes two rows. Row 1: tablet centred, `width: min(100%, 520px)`. Row 2: the five areas as a 2-column list (area 5 spans both), each with its gold node on the left. The SVG connectors are hidden; instead, a 1px `--gd-line` rule runs above the list and each area has the node only.
+- 1100px and below (stacked layout): the stage becomes two rows. Row 1: tablet centred, `width: min(100%, 520px)`. Row 2: the five areas as a 2-column list (column gap 48px, row gap 24px; area 5 spans both), under a 1px `--gd-line` rule with 24px above the first row. Each area is a row with its icon circle, reduced to 48px (22px glyph), left of the label; area 5 has its 20px node, centred in a 48px slot so its label lines up with the others. The SVG lines, tablet nodes, area nodes on the icon circles, particle and orbit are hidden. Areas animate in with `y: 16 → 0`.
 - 480px and below: areas in one column.
 - The text block remains centred as a block, max-width 560px.
 

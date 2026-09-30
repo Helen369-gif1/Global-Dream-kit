@@ -69,7 +69,8 @@ function initGiaConnect(sectionEl) {
   // Tablet nodes paint above every line.
   lines.forEach((line) => svg.append(line.end));
 
-  const particle = svgEl("circle", { class: "gd-connect__particle", r: "2", opacity: "0" });
+  // 6px: a 4px particle barely shows on the 2px line.
+  const particle = svgEl("circle", { class: "gd-connect__particle", r: "3", opacity: "0" });
   svg.append(particle);
 
   // Position of el's layout box inside the stage, ignoring transforms.

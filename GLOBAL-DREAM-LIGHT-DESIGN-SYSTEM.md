@@ -83,6 +83,7 @@ Add these tokens to `css/tokens.css`. Reuse them instead of repeating raw values
   --gd-line: #D8CDBE;
   --gd-line-soft: rgba(91, 72, 49, 0.12);
   --gd-shadow-soft: 0 14px 40px rgba(57, 43, 24, 0.08);
+  --gd-shadow-tablet: 0 24px 48px rgba(57, 43, 24, 0.14); /* drop-shadow() on the Screen 3 tablet image only */
 
   /* Type — unchanged */
   --gd-font-ui: "IBM Plex Sans", system-ui, sans-serif;
@@ -591,3 +592,15 @@ Approved 2026-09-28.
 - Clear space: at least the height of the "GLONARI" line on every side (about 10% of the lockup height).
 - Do not recolour, outline, add a glow or shadow, stretch, rotate, or place the logo on a coloured chip or photograph.
 - The logo's gold is its own; it is not a source for UI tokens. Interface gold stays `--gd-gold` / `--gd-gold-deep`.
+
+### 16.9 Screen 3 connection visuals
+
+Approved with the Screen 3 rework (visual target `references/screen-3-target.png`). These visuals apply on Screen 3 only and override, for Screen 3 only, the "avoid neon glows" guidance in Section 8.4. Nowhere else on the page may use glows, icon circles, or orbit decorations. Geometry and timing are in build spec Section 5.3.
+
+- **Glow colour.** One shared soft gold glow, `color-mix(in srgb, var(--gd-gold) 35%, transparent)`, declared once on the section as `--gd-connect-glow`. Glows are always soft and small (blur 4–12px); never a hard or saturated neon edge.
+- **Icons in circles.** Life areas 1–4 each show one icon inside a circle: 64px (48px in the stacked layout), 1px `--gd-gold` border, `radial-gradient(closest-side, var(--gd-surface), var(--gd-gold-soft))` fill, soft `--gd-gold-soft` glow (`box-shadow: 0 0 24px 6px`). The glyph is a simple solid inline SVG filled `--gd-gold-deep` (28px; 22px stacked). Icons are decorative (`aria-hidden`); the H3 label carries the meaning.
+- **Nodes.** Ringed dots with a 2px `--gd-gold` ring on a `--gd-surface` fill: 12px at both ends of every line, glowing softly (`0 0 6px` glow colour). Area 5's node is 20px, with a `--gd-gold` centre, a 6px `--gd-gold-soft` halo ring and a 12px glow.
+- **Lines.** 2px `--gd-gold`, round caps, softly glowing through a single `drop-shadow(0 0 4px …)` on the line layer. The same drop-shadow gives the tablet nodes and the travelling particle their glow; no other glow layer is added to the lines.
+- **Orbit decoration.** A static dotted ellipse around the tablet in 1px dotted `--gd-gold-line`, one 6px glowing `--gd-gold` dot at its top, and a few small `--gd-gold` specks (3–4px, 30–45% opacity). It never animates or floats, and it is hidden in the stacked layout.
+- **Tablet shadow.** The tablet image keeps its single depth shadow, `drop-shadow(var(--gd-shadow-tablet))` (Section 3). The glows above are the only other depth effects on the screen.
+- Gold remains the only accent in these visuals; no sky blue is used in them.

@@ -88,4 +88,4 @@ Before reporting a screen complete:
 - verify unfinished screens remain hidden;
 - verify no Cyrillic was added: `LC_ALL=C.UTF-8 grep -rnP "[\x{0400}-\x{04FF}]" --include=*.{html,css,js,md} .`
 
-Keep reports concise and factual.
+Keep reports concise and factual: what changed, what was checked, and anything unresolved. Do not attach screenshots, contrast tables, or other captured images to reports unless the current prompt asks for them. You may still take screenshots internally when a check requires one. Time-box debugging: after two unsuccessful attempts at the same problem, stop and report instead of continuing.
