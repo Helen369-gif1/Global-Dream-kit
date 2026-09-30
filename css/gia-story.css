@@ -209,15 +209,15 @@
 }
 
 .gd-story.is-scrub .gd-story__video {
-  transform: scale(1.1);
+  transform: scale(1.04);
   transform-origin: 55% 60%;
   will-change: transform;
 }
 
 /* Module layer. Row 1 puts the module top at 46% of the stage; it shrinks
    (never below 0) when a card would otherwise run into the bottom reserve
-   kept for the chapter counter. All modules share one cell and move by
-   transform only. */
+   kept for the chapter counter. All modules share one cell at their zone
+   rest position; the track moves them by transform only. */
 .gd-story.is-scrub .gd-story__modules {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, calc(46vh - var(--gd-story-header))) auto;
@@ -232,9 +232,8 @@
 .gd-story.is-scrub .gd-module {
   grid-area: 2 / 1;
   align-self: start;
-  opacity: 0;
   pointer-events: auto;
-  will-change: transform, opacity;
+  will-change: transform;
 }
 
 /* Content zones (build spec 5.4): left from the stage edge inset by the page
@@ -269,7 +268,6 @@
   margin: 0;
   padding: var(--gd-story-header) var(--gd-page-pad) 0;
   text-align: left;
-  opacity: 0;
   pointer-events: none;
 }
 
@@ -277,6 +275,7 @@
   align-items: flex-start;
   width: min(520px, 38cqw - var(--gd-page-pad));
   pointer-events: auto;
+  will-change: transform;
 }
 
 /* ---------- Chrome ---------- */

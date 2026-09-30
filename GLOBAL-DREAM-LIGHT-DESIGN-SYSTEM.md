@@ -561,7 +561,6 @@ A small label chip on top of photography or video may use `rgba(30, 35, 40, 0.55
 Veils over video exist purely for text legibility. They are permitted under Section 8.3 ("unless required for text legibility") and are not decorative gradient fills. A veil must never cover Gia.
 
 - Screen 1 uses a static dark veil built from `--gd-night` (`rgba(21, 24, 28, …)` linear gradient, darkest at the top, the lower half of the frame kept visibly light) with light text in `--gd-surface` and a soft `--gd-night` text shadow. Approved by the designer on 2026-09-29, replacing the earlier ivory veil. This is a legibility veil, not a dark section; the dark-screen rule in 16.1 is unaffected. Exact values are in build spec Section 5.1.
-- Screen 4 keeps scroll-faded ivory veils (`rgba(247, 243, 235, …)` linear gradients) with dark text.
 
 ### 16.5 Pinned sections
 

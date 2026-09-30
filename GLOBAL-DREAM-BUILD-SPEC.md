@@ -42,8 +42,8 @@ Everything below is already prepared in the repository.
 /GLOBAL-DREAM-LIGHT-DESIGN-SYSTEM.md       Visual source of truth (includes Section 16 exceptions)
 /media/gd-hero.mp4                         Screen 1 video, 1280x720, 24fps, 8.0s, all-keyframe, no audio, ~5.5MB
 /media/gd-hero-poster.jpg                  Screen 1 first frame (reduced motion / fallback)
-/media/gd-walk.mp4                         Screen 4 video, 1280x720, 24fps, 8.0s, all-keyframe, no audio, ~6.0MB
-/media/gd-walk-poster.jpg                  Screen 4 last frame (reduced motion / fallback)
+/media/gd-walk.mp4                         Screen 4 video, 1920x1080 (upscaled, framing unchanged), 24fps, 8.0s, all-keyframe, no audio, ~10.3MB
+/media/gd-walk-poster.jpg                  Screen 4 last frame, 1920x1080 (reduced motion / fallback)
 /media/gia-tablet.webp                     Screen 3 Gia video-call tablet, transparent background, 1279x1062
 /media/gia-tablet.png                      Same, lossless master (not loaded by the page)
 /media/logo/gd-lockup-light.webp           Official logo for light backgrounds (header, footer), 915x393, transparent (+ .png master)
@@ -297,8 +297,8 @@ Reduced motion: everything at rest and visible, lines fully drawn, all nodes vis
 **Reference effect.** `references/oceanx-horizontal-story-reference.mp4` (study it frame by frame before building). What to reproduce:
 
 1. A full-bleed background video pinned for the whole runway and scrubbed by vertical scroll — the subject stays roughly central and keeps moving while the visitor scrolls.
-2. Content "chapters" that travel horizontally: each enters from beyond the right edge, settles and holds for a stretch of scroll, then continues left and exits beyond the left edge, while the next chapter is already entering from the right. Consecutive chapters overlap briefly in transit.
-3. Chapters sit at different positions in the frame (never on top of the subject).
+2. Content "chapters" on one continuous horizontal track (as on 2025.oceanx.org): the track glides right to left linearly with scroll, with no holds, so each chapter enters from beyond the right edge and exits beyond the left edge while the next one follows. Chapters may cross the subject while moving.
+3. Chapters sit at different heights and zones in the frame.
 4. Each chapter: small mono chapter label, eyebrow in accent colour, large headline, one short line, one button.
 5. Quiet persistent chrome: a thin progress line along the top of the stage and a small chapter counter in a corner.
 
@@ -306,7 +306,7 @@ What not to reproduce: the dark ocean palette, white-on-dark text, pill buttons 
 
 **Footage.** `media/gd-walk.mp4`, 8.0s: Gia walks toward the camera across a marble plaza in front of classical architecture under a clear blue sky, framed roughly in the centre (her figure occupies approximately 45–68% of the frame width and 30–83% of its height). The background barely moves. There is no camera pull-back in the footage; the final "wider shot" is simulated with scale (see below).
 
-**Safe zones** (percent of the stage width, after `object-fit: cover`): keep `40%–70%` free of content at all times. Left content zone: container left edge to `38%`. Right content zone: `72%` to container right edge. Verify at 1920×1080, 1440×900, 1024×768 and on 16:10 and 4:3 ratios; if cover-cropping pushes Gia outside the safe band, adjust `object-position` (default `55% 50%`), not the zones.
+**Safe zones** (percent of the stage width, after `object-fit: cover`): Gia’s band is `40%–70%`. Chapter cards cross it while moving on the track; the final CTA card, the only card that comes to rest, stays clear of it. Left content zone: container left edge to `38%`. Right content zone: `72%` to container right edge. Verify at 1920×1080, 1440×900, 1024×768 and on 16:10 and 4:3 ratios; if cover-cropping pushes Gia outside the safe band, adjust `object-position` (default `55% 50%`), not the zones.
 
 **Section structure.**
 
@@ -318,23 +318,10 @@ What not to reproduce: the dark ocean palette, white-on-dark text, pill buttons 
 **Scroll model** (`js/gia-story.js`, `initGiaStory(section)`). One normalised progress `p` from 0 (stage pinned) to 1 (pin releases). Reuse the Screen 1 smoothing formula for `p` so the video and modules move together without jitter.
 
 - Video: `currentTime = smoothedP × duration` over the whole runway, seek only when `!video.seeking`. Gia never stops walking.
-- Video scale (simulated pull-back): `scale 1.10` from `p = 0` to `0.80`, then eases to `1.00` by `p = 0.98` (`power1.inOut`), `transform-origin: 55% 60%`. Transform only; it never affects layout.
-- Modules: each module's `translateX` and `opacity` are pure functions of `p` (fully reversible, no state machine). Enter: from `translateX(60vw)` to `0`, `power2.out`, opacity `0 → 1` in the first 40% of the enter window. Hold: at rest. Exit: `0` to `−60vw`, `power2.in`, opacity `1 → 0` in the last 40% of the exit window. Add a very small `y` drift during hold (`4px → −4px`) for life, as in the reference.
-
-| Range of `p` | Module 4.1 | Module 4.2 | Module 4.3 | Module 4.4 | Final CTA |
-|---|---|---|---|---|---|
-| `0.00–0.13` | hold (already at rest when the pin starts) | — | — | — | — |
-| `0.13–0.23` | exit | enter `0.15–0.25` | — | — | — |
-| `0.25–0.36` | — | hold | — | — | — |
-| `0.36–0.46` | — | exit | enter `0.38–0.48` | — | — |
-| `0.48–0.59` | — | — | hold | — | — |
-| `0.59–0.69` | — | — | exit | enter `0.61–0.71` | — |
-| `0.71–0.80` | — | — | — | hold | — |
-| `0.80–0.88` | — | — | — | exit | — |
-| `0.86–0.94` | — | — | — | — | fade in |
-| `0.94–1.00` | — | — | — | — | hold, no exit |
-
-These ranges may be tuned in the browser for feel; if tuned, update this table in the same task.
+- Video scale (simulated pull-back): `scale 1.04` from `p = 0` to `0.80` (a deliberately subtle design choice), then eases to `1.00` by `p = 0.98` (`power1.inOut`), `transform-origin: 55% 60%`. Transform only; it never affects layout.
+- Track (approved 2026-09-30, replaces the earlier enter/hold/exit table): the four chapter cards sit on one horizontal track and move right to left linearly with `smoothedP`, with no holds, no easing and no opacity change. Each card's screen-space left edge is `x = W + i × S − v × p` (`W` stage width, `i` = 0–3, `v` the track speed); the card moves by `translateX(x − rest)` from its zone rest position, so it keeps its zone width and vertical anchor. Spacing `S = max(0.75 × W, widest card + 0.12 × W)` (the minimum keeps the full-width mobile cards from overlapping). At `p = 0` card 4.1 is just beyond the right edge; `v` is set so card 4.4's right edge leaves the screen at `p = 0.86`. Everything is a pure function of `p`, fully reversible.
+- Final CTA: the next card on the same track at the same speed, `x = rest + v × max(0, 0.94 − p)`. It settles in the left zone at `p = 0.94` and holds to `p = 1` with no exit. At the same speed it enters from the right while card 4.4 is still crossing (about `p = 0.70`, roughly 0.58 × `W` behind it).
+- Spacing and the two anchor values (`0.86`, `0.94`) may be tuned in the browser for feel; if tuned, update this section in the same task.
 
 **Zone geometry** (approved 2026-09-30, resolves the conflict between the right zone and the card width). The zones are measured from the stage edge inset by the page padding (`--gd-page-pad`), not from the 1200px container. A card is `min(440px, 34%)` of the stage width and never wider than its zone: left cards `min(440px, 34%, 38% − pad)` starting at the inset left edge; right cards `min(440px, 34%, 28% − pad)` ending at the inset right edge. Below a 1400px stage width the right zone is narrower than 340px, so every module uses the left zone.
 
@@ -358,7 +345,7 @@ These ranges may be tuned in the browser for feel; if tuned, update this table i
 
 Headings on the page stay in order: H2 for the section (visually hidden, text `Gia in your life`), H3 per module, H2 for the final CTA. The visually hidden H2 uses the standard `.visually-hidden` utility.
 
-Interactivity: a module's button is focusable and clickable only while its module is at least 60% opaque; otherwise `inert` is set on the module (toggle on threshold crossings, not every frame). Keyboard users tabbing into a module that is off-screen must never happen.
+Interactivity (approved 2026-09-30): a module's button is focusable and clickable only while the button itself is fully inside the stage (the viewport), at every width; otherwise `inert` is set on the module (toggle on threshold crossings, not every frame). Keyboard users tabbing into a module that is off-screen must never happen.
 
 **Final CTA** (`<div id="screen-4-final" class="gd-story__final">`), left content zone, vertically centred in the stage, on a solid card identical to the module card (same surface, border, radius and padding), width `min(520px, zone width)`; on mobile full container width, docked like the modules. The static (reduced-motion) composition keeps it without a card, centred on `--gd-bg`:
 
@@ -372,12 +359,12 @@ Interactivity: a module's button is focusable and clickable only while its modul
 
 No legibility veil: the card carries the contrast (approved 2026-09-30, replacing the earlier ivory veil, which failed AA over the video).
 
-The final CTA follows the same `inert`/opacity interactivity rule as the modules.
+The final CTA follows the same `inert` rule as the modules (clickable while its `Meet Gia` button is fully inside the stage, which always includes `p ≥ 0.94`).
 
 **Chrome.**
 
 - Progress line: 2px tall, full stage width, top of the stage just below the header, track `--gd-line-soft`, fill `--gd-gold`, `scaleX = p`, `transform-origin: left`. `aria-hidden`.
-- Chapter counter: bottom-left at the stage edge inset by the page padding, 32px from the stage bottom, IBM Plex Mono 500, 12px: `01 / 04` … `04 / 04`, switching at each module's hold start; hidden during the final CTA. `aria-hidden` (the modules themselves carry the meaning).
+- Chapter counter: bottom-left at the stage edge inset by the page padding, 32px from the stage bottom, IBM Plex Mono 500, 12px: `01 / 04` … `04 / 04`: the active chapter is the card whose centre is nearest 35% of the stage width; hidden once the final CTA card is nearer that point than any chapter card. `aria-hidden` (the modules themselves carry the meaning).
 - Four small ticks under the counter (8px × 2px, gap 6px), the active one `--gd-gold`, others `--gd-line`. `aria-hidden`.
 
 **Side brochures** are specified in full in Section 5.4a below. `js/brochure.js` exports `initBrochures(root)`; `js/gia-story.js` exposes nothing global — the two talk through a `CustomEvent` on the section (`gd:brochure-open` / `gd:brochure-close`) so the story can freeze and resume.
@@ -386,7 +373,7 @@ The final CTA follows the same `inert`/opacity interactivity rule as the modules
 
 **Mobile (768px and below, normal motion).** Keep the pin and scrub. Modules and the final CTA dock to the bottom of the stage: full container width, `bottom: calc(24px + env(safe-area-inset-bottom))`, card padding 24px, H3 `clamp(22px, 6vw, 26px)`; the horizontal travel is the same. The final CTA card docks to the bottom like the modules. Video `object-position: 55% 40%` so Gia sits above the cards. Counter moves to the top-left under the progress line, on the small dark chip from design-system 16.2 (26px tall, `--gd-text-primary` at 55%, radius 4px, light `--gd-surface` text, count and ticks on one row).
 
-**Missing video.** Poster as a static background, all module timing still runs on scroll.
+**Missing video.** Poster as a static background, the card track still runs on scroll.
 
 ---
 
@@ -401,7 +388,7 @@ The final CTA follows the same `inert`/opacity interactivity rule as the modules
 - Every module has one real `<button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-…">` directly under its short text (labels in the Section 5.4 module table). It opens that module's brochure.
 - The button carries a trailing 6px `--gd-gold` dot (`::after`, decorative), echoing the reference's "learn more" control. This is the only button on the page with a decorative mark (design-system Section 16.6).
 - Hit area at least 44px tall; `cursor: pointer`; hover: border `--gd-gold-deep` and the dot scales to 1.3 (200ms); focus ring per Section 4.2.
-- Clickable whenever its module is at least 60% opaque (Section 5.4 `inert` rule), which always includes the whole hold phase. Clicking during transit is allowed above that threshold.
+- Clickable while the button itself is fully inside the stage, at every width (Section 5.4 `inert` rule).
 - On click, the story freezes: the smoothing loop keeps the current `p` and stops chasing scroll until the brochure closes. The page does not scroll or jump.
 
 #### 5.4a.2 Panel structure
@@ -623,7 +610,7 @@ Placeholder for any missing still or slot: `--gd-bg-soft` fill, 1px dashed `--gd
 
 Blob loading: start fetching the hero video immediately; start fetching the walk video when Screen 3 is within one viewport of entering (`IntersectionObserver` with `rootMargin: "100% 0px"`) so it does not compete with the hero. Never fetch the walk video under reduced motion or short viewports.
 
-Weight budget: videos ~11.5MB, brochure images ~0.7MB (lazy, only on open), all other assets under 1MB, total under 13.5MB. No autoplaying video on this page; both videos are scrubbed only.
+Weight budget: videos ~15.8MB (hero ~5.5MB, walk ~10.3MB), brochure images ~0.7MB (lazy, only on open), all other assets under 1MB, total under 17.5MB. No autoplaying video on this page; both videos are scrubbed only.
 
 ---
 
@@ -650,7 +637,7 @@ Weight budget: videos ~11.5MB, brochure images ~0.7MB (lazy, only on open), all 
 - [ ] Screen 1 scrubs smoothly, text blocks never overlap, block 3 and `Meet Gia` hold to the end, the button is only interactive when visible.
 - [ ] Screen 2 is the only dark section; its rail completes once and its ambient dot pauses off-screen.
 - [ ] Screen 3 areas appear in order 1–5, lines stay attached to the tablet at every width above 1100px, and the stacked layout replaces lines below it.
-- [ ] Screen 4 matches the reference mechanics: scrubbed walking video, chapters entering from the right and exiting to the left with brief overlap, holds, progress line, counter, simulated pull-back, final CTA with no exit. Nothing ever covers Gia's safe band.
+- [ ] Screen 4 matches the reference mechanics: scrubbed walking video, chapters on one continuous track entering from the right and exiting to the left, progress line, counter, simulated pull-back, final CTA with no exit. Nothing ever covers Gia's safe band.
 - [ ] Every module button under the text opens its brochure; the panel slides in from the right leaving a strip of the story visible, media column fixed, body column scrolling; copy matches 5.4a.3; story freezes while open; Escape/backdrop/close work; focus returns; scroll position is restored exactly.
 - [ ] Reduced motion and `max-height: 560px` produce the static layouts specified.
 - [ ] Layout correct at 1920, 1440, 1024, 768, 375; no horizontal page scroll.
@@ -682,7 +669,7 @@ Weight budget: videos ~11.5MB, brochure images ~0.7MB (lazy, only on open), all 
 
 **A6 — Screen 4 brochures**
 
-> First open `references/oceanx-brochure-panel.png` and describe the panel layout you will reproduce. Then build the four brochure dialogs per Section 5.4a in `index.html`, `css/gia-story.css`, and `js/brochure.js`, with the copy from 5.4a.3 verbatim, and wire the module buttons from 5.4a.1. Verify: buttons are clickable during every hold phase, the story freezes while a panel is open, focus handling, Escape/backdrop/close, and exact scroll-position restore.
+> First open `references/oceanx-brochure-panel.png` and describe the panel layout you will reproduce. Then build the four brochure dialogs per Section 5.4a in `index.html`, `css/gia-story.css`, and `js/brochure.js`, with the copy from 5.4a.3 verbatim, and wire the module buttons from 5.4a.1. Verify: buttons are clickable while the button is fully on screen, the story freezes while a panel is open, focus handling, Escape/backdrop/close, and exact scroll-position restore.
 
 **A7 — Site shell**
 
