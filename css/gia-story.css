@@ -1,1 +1,398 @@
-/* Screen 4 stage, story modules, final CTA, brochures (build spec Sections 5.4, 5.4a). Built in tasks A5-A6. */
+/* Screen 4 stage, story modules, final CTA, brochures (build spec Sections 5.4, 5.4a). Brochures are built in task A6.
+
+   The default rules are the static composition used under reduced motion
+   and on short viewports (max-height: 560px): the poster as a full-bleed
+   band, the modules as a 2x2 grid, then the final CTA centred. This is also
+   what remains if JavaScript fails. gia-story.js adds .is-scrub to the
+   section to switch on the pinned horizontal story. */
+
+/* ==========================================================================
+   Static composition
+   ========================================================================== */
+
+.gd-story {
+  /* Fixed header height the stage content is offset by (build spec 5.4). */
+  --gd-story-header: 72px;
+  background: var(--gd-bg);
+}
+
+.gd-story__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 80vh;
+  max-height: 80svh;
+  overflow: hidden;
+  background: var(--gd-bg-soft);
+}
+
+.gd-story__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 55% 50%;
+}
+
+.gd-story__chrome {
+  display: none;
+}
+
+.gd-story__modules {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gd-space-3);
+  width: min(100%, var(--gd-container-max));
+  margin-inline: auto;
+  padding: var(--gd-section-pad) var(--gd-page-pad) 0;
+}
+
+.gd-story__final {
+  width: min(100%, 800px);
+  margin-inline: auto;
+  padding: var(--gd-section-pad) var(--gd-page-pad);
+  text-align: center;
+}
+
+.gd-story__final-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .gd-story__modules {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gd-story__final-cta {
+    align-self: stretch;
+  }
+}
+
+/* ==========================================================================
+   Story module (build spec 5.4)
+   ========================================================================== */
+
+/* The card surface is shared by the modules and, in the pinned story, the
+   final CTA card. */
+.gd-module,
+.gd-story.is-scrub .gd-story__final-inner {
+  min-width: 0;
+  padding: var(--gd-space-4);
+  background: color-mix(in srgb, var(--gd-surface) 92%, transparent);
+  border: 1px solid var(--gd-line);
+  border-radius: 8px;
+}
+
+.gd-module__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--gd-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gd-text-secondary);
+}
+
+.gd-module__label::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  background: var(--gd-gold);
+}
+
+.gd-module__eyebrow {
+  margin-top: 12px;
+}
+
+.gd-module__title {
+  margin-top: 12px;
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.gd-module__text {
+  margin-top: 12px;
+  color: var(--gd-text-secondary);
+}
+
+/* Brochure trigger with its trailing decorative dot (design system 16.6). */
+.gd-module__cta {
+  gap: 10px;
+  margin-top: var(--gd-space-3);
+}
+
+.gd-module__cta::after {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gd-gold);
+  transition: transform 200ms ease;
+}
+
+.gd-module__cta:hover::after {
+  transform: scale(1.3);
+}
+
+@media (max-width: 768px) {
+  .gd-module,
+  .gd-story.is-scrub .gd-story__final-inner {
+    padding: var(--gd-space-3);
+  }
+
+  .gd-module__title {
+    font-size: clamp(22px, 6vw, 26px);
+  }
+}
+
+/* ==========================================================================
+   Final CTA content (build spec 5.4)
+   ========================================================================== */
+
+.gd-story__final-lines {
+  margin-top: var(--gd-space-3);
+}
+
+.gd-story__final-cta {
+  margin-top: var(--gd-space-5);
+}
+
+.gd-story__final-note {
+  margin-top: var(--gd-space-2);
+  font-family: var(--gd-font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  color: var(--gd-text-secondary);
+}
+
+/* ==========================================================================
+   Pinned horizontal story
+   ========================================================================== */
+
+.gd-story.is-scrub .gd-story__runway {
+  height: 650vh;
+}
+
+/* Overflow is contained on the sticky stage itself, never on an ancestor.
+   The stage is a size container so zone widths are measured against the
+   stage width (cqw) without the scrollbar. */
+.gd-story.is-scrub .gd-story__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  container: gd-story / inline-size;
+}
+
+.gd-story.is-scrub .gd-story__stage > * {
+  position: absolute;
+  inset: 0;
+}
+
+.gd-story.is-scrub .gd-story__media {
+  max-height: none;
+  aspect-ratio: auto;
+}
+
+.gd-story.is-scrub .gd-story__video {
+  transform: scale(1.1);
+  transform-origin: 55% 60%;
+  will-change: transform;
+}
+
+/* Module layer. Row 1 puts the module top at 46% of the stage; it shrinks
+   (never below 0) when a card would otherwise run into the bottom reserve
+   kept for the chapter counter. All modules share one cell and move by
+   transform only. */
+.gd-story.is-scrub .gd-story__modules {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, calc(46vh - var(--gd-story-header))) auto;
+  grid-template-rows: minmax(0, calc(46svh - var(--gd-story-header))) auto;
+  gap: 0;
+  width: auto;
+  margin: 0;
+  padding: var(--gd-story-header) var(--gd-page-pad) var(--gd-space-7);
+  pointer-events: none;
+}
+
+.gd-story.is-scrub .gd-module {
+  grid-area: 2 / 1;
+  align-self: start;
+  opacity: 0;
+  pointer-events: auto;
+  will-change: transform, opacity;
+}
+
+/* Content zones (build spec 5.4): left from the stage edge inset by the page
+   padding to 38% of the stage; right from 72% to the inset right edge. Each
+   card is min(440px, 34% of the stage) and never wider than its zone. */
+.gd-story.is-scrub .gd-module--left {
+  justify-self: start;
+  width: min(440px, 34cqw, 38cqw - var(--gd-page-pad));
+}
+
+.gd-story.is-scrub .gd-module--right {
+  justify-self: end;
+  width: min(440px, 34cqw, 28cqw - var(--gd-page-pad));
+}
+
+/* Below 1400px the right zone is narrower than 340px, so every module
+   uses the left zone. */
+@container gd-story (max-width: 1399px) {
+  .gd-story.is-scrub .gd-module--right {
+    justify-self: start;
+    width: min(440px, 34cqw, 38cqw - var(--gd-page-pad));
+  }
+}
+
+/* Final CTA: a card in the left content zone, vertically centred below the
+   header. */
+.gd-story.is-scrub .gd-story__final {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+  margin: 0;
+  padding: var(--gd-story-header) var(--gd-page-pad) 0;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gd-story.is-scrub .gd-story__final-inner {
+  align-items: flex-start;
+  width: min(520px, 38cqw - var(--gd-page-pad));
+  pointer-events: auto;
+}
+
+/* ---------- Chrome ---------- */
+
+.gd-story.is-scrub .gd-story__chrome {
+  display: block;
+  pointer-events: none;
+}
+
+.gd-story__progress {
+  position: absolute;
+  top: var(--gd-story-header);
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gd-line-soft);
+}
+
+.gd-story__progress-fill {
+  display: block;
+  height: 100%;
+  background: var(--gd-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+}
+
+.gd-story__counter {
+  position: absolute;
+  left: var(--gd-page-pad);
+  bottom: var(--gd-space-4);
+  transition: opacity 300ms ease;
+}
+
+.gd-story__counter.is-hidden {
+  opacity: 0;
+}
+
+.gd-story__count {
+  font-family: var(--gd-font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  color: var(--gd-text-primary);
+}
+
+.gd-story__ticks {
+  display: flex;
+  gap: 6px;
+  margin-top: var(--gd-space-1);
+}
+
+.gd-story__tick {
+  width: 8px;
+  height: 2px;
+  background: var(--gd-line);
+  transition: background-color 300ms ease;
+}
+
+.gd-story__tick.is-active {
+  background: var(--gd-gold);
+}
+
+/* ---------- Mobile (768px and below): cards dock to the bottom ---------- */
+
+@media (max-width: 768px) {
+  .gd-story {
+    --gd-story-header: 64px;
+  }
+
+  .gd-story.is-scrub .gd-story__video {
+    object-position: 55% 40%;
+  }
+
+  .gd-story.is-scrub .gd-story__modules {
+    grid-template-rows: minmax(0, 1fr) auto;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .gd-story.is-scrub .gd-module,
+  .gd-story.is-scrub .gd-module--left,
+  .gd-story.is-scrub .gd-module--right {
+    justify-self: stretch;
+    width: auto;
+  }
+
+  .gd-story.is-scrub .gd-story__final {
+    justify-content: flex-end;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .gd-story.is-scrub .gd-story__final-inner {
+    width: auto;
+  }
+
+  /* Over the sky: the small dark chip from design system 16.2, with the
+     count and ticks on one row. */
+  .gd-story__counter {
+    top: calc(var(--gd-story-header) + 2px + var(--gd-space-2));
+    bottom: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 26px;
+    padding-inline: 10px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--gd-text-primary) 55%, transparent);
+  }
+
+  .gd-story__count {
+    line-height: 1;
+    color: var(--gd-surface);
+  }
+
+  .gd-story__ticks {
+    margin-top: 0;
+  }
+}

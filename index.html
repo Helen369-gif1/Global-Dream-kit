@@ -174,11 +174,72 @@
       </div>
     </section>
 
-    <!-- Screen 4 — Gia in your life, horizontal story (build spec 5.4). Built in A5-A6. -->
-    <section id="screen-4" class="gd-story" data-screen="life" hidden>
+    <!-- Screen 4 — Gia in your life, horizontal story (build spec 5.4). Brochures are added in A6. -->
+    <section id="screen-4" class="gd-story" data-screen="life">
       <h2 class="visually-hidden">Gia in your life</h2>
-      <div id="screen-4-final" class="gd-story__final">
-        <h2 class="gd-h2 gd-h2--large">Start with Gia.</h2>
+      <div class="gd-story__runway">
+        <div class="gd-story__stage">
+          <div class="gd-story__media">
+            <video class="gd-story__video" data-src="media/gd-walk.mp4" poster="media/gd-walk-poster.jpg" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+          </div>
+
+          <div class="gd-story__modules">
+            <article class="gd-module gd-module--left">
+              <p class="gd-module__label">CHAPTER 01</p>
+              <p class="gd-eyebrow gd-module__eyebrow">FIND A HOME</p>
+              <h3 class="gd-module__title">Find a home that fits the life you want.</h3>
+              <p class="gd-small gd-module__text">Gia helps you explore housing options, compare possibilities, and understand what may fit your plans.</p>
+              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-homes">Explore Homes</button>
+            </article>
+            <article class="gd-module gd-module--right">
+              <p class="gd-module__label">CHAPTER 02</p>
+              <p class="gd-eyebrow gd-module__eyebrow">UNDERSTAND YOUR FINANCES</p>
+              <h3 class="gd-module__title">See what’s possible before you decide what’s next.</h3>
+              <p class="gd-small gd-module__text">Gia helps bring your financial picture, goals, and available options together so you can plan with more clarity.</p>
+              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-finances">Explore Your Options</button>
+            </article>
+            <article class="gd-module gd-module--left">
+              <p class="gd-module__label">CHAPTER 03</p>
+              <p class="gd-eyebrow gd-module__eyebrow">PLAN A MOVE</p>
+              <h3 class="gd-module__title">Turn a move into a plan.</h3>
+              <p class="gd-small gd-module__text">Gia can help organize the steps around moving, property decisions, and what comes next.</p>
+              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-moving">Explore Moving</button>
+            </article>
+            <article class="gd-module gd-module--right">
+              <p class="gd-module__label">CHAPTER 04</p>
+              <p class="gd-eyebrow gd-module__eyebrow">BUILD WHAT COMES NEXT</p>
+              <h3 class="gd-module__title">Your next opportunity may start with one conversation.</h3>
+              <p class="gd-small gd-module__text">Explore business, travel, education, and other possibilities as they become part of your journey.</p>
+              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-possibilities">Explore Possibilities</button>
+            </article>
+          </div>
+
+          <div id="screen-4-final" class="gd-story__final">
+            <div class="gd-story__final-inner">
+              <h2 class="gd-h2 gd-h2--large gd-story__final-title">Start with Gia.</h2>
+              <div class="gd-story__final-lines">
+                <p class="gd-lead">You don’t have to plan everything today.</p>
+                <p class="gd-lead">Start with one question.</p>
+              </div>
+              <!-- TODO: destination for Meet Gia (build spec Appendix B, item 1) -->
+              <a class="gd-button gd-button--primary gd-story__final-cta" href="#">Meet Gia</a>
+              <p class="gd-story__final-note">Talk. Explore. Plan what’s next.</p>
+            </div>
+          </div>
+
+          <div class="gd-story__chrome" aria-hidden="true">
+            <div class="gd-story__progress"><span class="gd-story__progress-fill"></span></div>
+            <div class="gd-story__counter">
+              <p class="gd-story__count">01 / 04</p>
+              <div class="gd-story__ticks">
+                <span class="gd-story__tick is-active"></span>
+                <span class="gd-story__tick"></span>
+                <span class="gd-story__tick"></span>
+                <span class="gd-story__tick"></span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>

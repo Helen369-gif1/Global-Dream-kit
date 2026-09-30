@@ -312,7 +312,7 @@ What not to reproduce: the dark ocean palette, white-on-dark text, pill buttons 
 
 - `#screen-4`, class `gd-story`, `data-screen="life"`. Runway wrapper height `650vh`.
 - Sticky stage: `position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden` (overflow on the stage itself only).
-- Layers inside the stage, bottom to top: video (`.gd-story__video`, blob-loaded, `muted playsinline`, poster `gd-walk-poster.jpg`, cover), final-CTA legibility veil, module layer, chrome layer.
+- Layers inside the stage, bottom to top: video (`.gd-story__video`, blob-loaded, `muted playsinline`, poster `gd-walk-poster.jpg`, cover), module layer (modules and the final CTA card), chrome layer. There is no veil on Screen 4.
 - The stage's inner content is offset by the fixed header height (72px desktop / 64px mobile) so nothing important sits under the header.
 
 **Scroll model** (`js/gia-story.js`, `initGiaStory(section)`). One normalised progress `p` from 0 (stage pinned) to 1 (pin releases). Reuse the Screen 1 smoothing formula for `p` so the video and modules move together without jitter.
@@ -336,12 +336,14 @@ What not to reproduce: the dark ocean palette, white-on-dark text, pill buttons 
 
 These ranges may be tuned in the browser for feel; if tuned, update this table in the same task.
 
-**Module positions.** Alternate zones: 4.1 left, 4.2 right, 4.3 left, 4.4 right. Vertical anchor: module top at `46%` of the stage height (below the rooflines, over the plaza and building base).
+**Zone geometry** (approved 2026-09-30, resolves the conflict between the right zone and the card width). The zones are measured from the stage edge inset by the page padding (`--gd-page-pad`), not from the 1200px container. A card is `min(440px, 34%)` of the stage width and never wider than its zone: left cards `min(440px, 34%, 38% − pad)` starting at the inset left edge; right cards `min(440px, 34%, 28% − pad)` ending at the inset right edge. Below a 1400px stage width the right zone is narrower than 340px, so every module uses the left zone.
+
+**Module positions.** Alternate zones: 4.1 left, 4.2 right, 4.3 left, 4.4 right (all left below 1400px, see above). Vertical anchor: module top at `46%` of the stage height (below the rooflines, over the plaza and building base). If a card would then run into the 96px reserved above the stage bottom for the chapter counter, it moves up just enough to clear it.
 
 **Module component** (`<article class="gd-module">`):
 
-- Surface: `rgba(255, 253, 248, 0.92)` (the `--gd-surface` colour at 92%), 1px `--gd-line`, radius 8px, padding 32px, width `min(440px, 34vw)`. No blur, no shadow. The solid surface guarantees contrast over the bright plaza.
-- Chapter label: IBM Plex Mono 500, 11px, `0.12em`, uppercase, `--gd-text-tertiary`, preceded by a 6px `--gd-gold` square. Format `CHAPTER 01` to `CHAPTER 04`.
+- Surface: `rgba(255, 253, 248, 0.92)` (the `--gd-surface` colour at 92%), 1px `--gd-line`, radius 8px, padding 32px, width `min(440px, 34vw)` capped by its zone (see Zone geometry). No blur, no shadow. The solid surface guarantees contrast over the bright plaza.
+- Chapter label: IBM Plex Mono 500, 11px, `0.12em`, uppercase, `--gd-text-secondary` (`--gd-text-tertiary` measured 3.8:1 on the card over the video), preceded by a 6px `--gd-gold` square. Format `CHAPTER 01` to `CHAPTER 04`.
 - Eyebrow: eyebrow style, `--gd-gold-deep`, 12px below the label.
 - H3: `clamp(24px, 2.4vw, 34px)`, 600, line-height 1.15, 12px below eyebrow.
 - Text: small body, `--gd-text-secondary`, 12px below the H3.
@@ -358,7 +360,7 @@ Headings on the page stay in order: H2 for the section (visually hidden, text `G
 
 Interactivity: a module's button is focusable and clickable only while its module is at least 60% opaque; otherwise `inert` is set on the module (toggle on threshold crossings, not every frame). Keyboard users tabbing into a module that is off-screen must never happen.
 
-**Final CTA** (`<div id="screen-4-final" class="gd-story__final">`), left content zone, vertically centred in the stage, no card:
+**Final CTA** (`<div id="screen-4-final" class="gd-story__final">`), left content zone, vertically centred in the stage, on a solid card identical to the module card (same surface, border, radius and padding), width `min(520px, zone width)`; on mobile full container width, docked like the modules. The static (reduced-motion) composition keeps it without a card, centred on `--gd-bg`:
 
 | Element | Copy | Style |
 |---|---|---|
@@ -366,23 +368,23 @@ Interactivity: a module's button is focusable and clickable only while its modul
 | Line 1 | `You don’t have to plan everything today.` | Lead, `--gd-text-secondary`, 24px below H2 |
 | Line 2 | `Start with one question.` | Lead, `--gd-text-secondary` |
 | Button | `Meet Gia` | `.gd-button--primary`, 48px below lines |
-| Supporting line | `Talk. Explore. Plan what’s next.` | IBM Plex Mono 500, 12px, `0.06em`, sentence case (not uppercase), `--gd-text-tertiary`, 16px below button |
+| Supporting line | `Talk. Explore. Plan what’s next.` | IBM Plex Mono 500, 12px, `0.06em`, sentence case (not uppercase), `--gd-text-secondary`, 16px below button |
 
-Legibility veil for the final CTA: `linear-gradient(to right, rgba(247,243,235,.88) 0%, rgba(247,243,235,.62) 34%, rgba(247,243,235,0) 56%)`, fades `0 → 1` over `p 0.82–0.92`. It must never cover Gia (ends before 56%).
+No legibility veil: the card carries the contrast (approved 2026-09-30, replacing the earlier ivory veil, which failed AA over the video).
 
 The final CTA follows the same `inert`/opacity interactivity rule as the modules.
 
 **Chrome.**
 
 - Progress line: 2px tall, full stage width, top of the stage just below the header, track `--gd-line-soft`, fill `--gd-gold`, `scaleX = p`, `transform-origin: left`. `aria-hidden`.
-- Chapter counter: bottom-left inside the container, 32px from the stage bottom, IBM Plex Mono 500, 12px: `01 / 04` … `04 / 04`, switching at each module's hold start; hidden during the final CTA. `aria-hidden` (the modules themselves carry the meaning).
+- Chapter counter: bottom-left at the stage edge inset by the page padding, 32px from the stage bottom, IBM Plex Mono 500, 12px: `01 / 04` … `04 / 04`, switching at each module's hold start; hidden during the final CTA. `aria-hidden` (the modules themselves carry the meaning).
 - Four small ticks under the counter (8px × 2px, gap 6px), the active one `--gd-gold`, others `--gd-line`. `aria-hidden`.
 
 **Side brochures** are specified in full in Section 5.4a below. `js/brochure.js` exports `initBrochures(root)`; `js/gia-story.js` exposes nothing global — the two talk through a `CustomEvent` on the section (`gd:brochure-open` / `gd:brochure-close`) so the story can freeze and resume.
 
 **Reduced motion, and short viewports** (`prefers-reduced-motion: reduce` or `max-height: 560px`): no runway, no pin, no scrub. Screen 4 becomes a normal section: `gd-walk-poster.jpg` as a full-bleed band (`aspect-ratio: 16/9`, max-height 80svh, `object-fit: cover`), then the four modules as a normal 2×2 grid (1 column below 768px) on `--gd-bg`, then the final CTA centred in a CTA composition (design system 7.3). Brochures work the same, without animation. Chrome hidden.
 
-**Mobile (768px and below, normal motion).** Keep the pin and scrub. Modules and the final CTA dock to the bottom of the stage: full container width, `bottom: calc(24px + env(safe-area-inset-bottom))`, card padding 24px, H3 `clamp(22px, 6vw, 26px)`; the horizontal travel is the same. The final-CTA veil becomes vertical (`to top`, 0 → 48% of height) and the final CTA sits in the lower half. Video `object-position: 55% 40%` so Gia sits above the cards. Counter moves to the top-left under the progress line.
+**Mobile (768px and below, normal motion).** Keep the pin and scrub. Modules and the final CTA dock to the bottom of the stage: full container width, `bottom: calc(24px + env(safe-area-inset-bottom))`, card padding 24px, H3 `clamp(22px, 6vw, 26px)`; the horizontal travel is the same. The final CTA card docks to the bottom like the modules. Video `object-position: 55% 40%` so Gia sits above the cards. Counter moves to the top-left under the progress line, on the small dark chip from design-system 16.2 (26px tall, `--gd-text-primary` at 55%, radius 4px, light `--gd-surface` text, count and ticks on one row).
 
 **Missing video.** Poster as a static background, all module timing still runs on scroll.
 
