@@ -632,18 +632,6 @@ html.is-brochure-open body {
   margin-top: var(--gd-space-2);
 }
 
-.gd-brochure__subhead {
-  margin-top: var(--gd-space-3);
-  margin-bottom: var(--gd-space-1);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--gd-gold-deep);
-}
-
-.gd-brochure__story > .gd-h3 + .gd-brochure__subhead {
-  margin-top: 0;
-}
-
 .gd-brochure__list {
   display: grid;
   gap: 10px;
@@ -651,6 +639,10 @@ html.is-brochure-open body {
   font-size: 15px;
   line-height: 1.6;
   color: var(--gd-text-primary);
+}
+
+.gd-brochure__list + p:not([class]) {
+  margin-top: var(--gd-space-3);
 }
 
 .gd-brochure__list li {
@@ -671,11 +663,32 @@ html.is-brochure-open body {
   border-radius: 50%;
 }
 
-.gd-brochure__list--checks li::before {
-  width: 12px;
-  height: 12px;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.5 6.5l3 3 6-7' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.5 6.5l3 3 6-7' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+/* Process row (brochure 3): step chips joined by arrows. The arrows are
+   text, so the whole sequence reads as one sentence. */
+.gd-brochure__process {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--gd-space-3);
+}
+
+.gd-brochure__step {
+  padding: 6px 10px;
+  border: 1px solid var(--gd-gold-line);
+  border-radius: 4px;
+  background: var(--gd-bg);
+  font-family: var(--gd-font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--gd-text-primary);
+}
+
+.gd-brochure__arrow {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--gd-gold-deep);
 }
 
 .gd-brochure__figure {
@@ -728,6 +741,11 @@ html.is-brochure-open body {
   color: var(--gd-text-primary);
 }
 
+/* A card without a role label (the visitor's own question). */
+.gd-quote__text:first-child {
+  margin-top: 0;
+}
+
 .gd-quote__outcome {
   margin-top: var(--gd-space-2);
   padding-top: var(--gd-space-2);
@@ -739,38 +757,6 @@ html.is-brochure-open body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--gd-gold-deep);
-}
-
-.gd-quote__note {
-  margin-top: 12px;
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--gd-text-tertiary);
-}
-
-/* The Glonari Experience Collection (brochure 4, story 4). */
-.gd-brochure__cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--gd-space-3);
-  margin-top: var(--gd-space-2);
-}
-
-.gd-brochure__card {
-  min-width: 0;
-  padding: var(--gd-space-3);
-  border: 1px solid var(--gd-line);
-  border-radius: 8px;
-  background: var(--gd-bg);
-}
-
-.gd-brochure__card h4 {
-  font-size: 18px;
-  color: var(--gd-gold-deep);
-}
-
-.gd-brochure__card p {
-  margin-top: var(--gd-space-1);
 }
 
 .gd-brochure__closing {
@@ -787,6 +773,13 @@ html.is-brochure-open body {
   flex-wrap: wrap;
   gap: var(--gd-space-2);
   margin-top: var(--gd-space-4);
+}
+
+/* Brochures without a closing line: the actions take its rule. */
+.gd-brochure__story + .gd-brochure__actions {
+  margin-top: var(--gd-space-6);
+  padding-top: var(--gd-space-4);
+  border-top: 1px solid var(--gd-line);
 }
 
 /* ---------- 1100px and below: full width, one scrolling column ---------- */
@@ -843,11 +836,5 @@ html.is-brochure-open body {
 
   .gd-brochure__actions {
     flex-direction: column;
-  }
-}
-
-@media (max-width: 599px) {
-  .gd-brochure__cards {
-    grid-template-columns: minmax(0, 1fr);
   }
 }

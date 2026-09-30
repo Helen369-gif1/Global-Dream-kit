@@ -174,7 +174,7 @@
       </div>
     </section>
 
-    <!-- Screen 4 — Gia in your life, horizontal story (build spec 5.4). Brochures are added in A6. -->
+    <!-- Screen 4 — Gia in your life, horizontal story (build spec 5.4). The side brochures (5.4a) follow the runway. -->
     <section id="screen-4" class="gd-story" data-screen="life">
       <h2 class="visually-hidden">Gia in your life</h2>
       <div class="gd-story__runway">
@@ -187,30 +187,30 @@
             <article class="gd-module gd-module--left">
               <p class="gd-module__label">CHAPTER 01</p>
               <p class="gd-eyebrow gd-module__eyebrow">FIND A HOME</p>
-              <h3 class="gd-module__title">Find a home that fits the life you want.</h3>
+              <h3 class="gd-module__title" id="module-homes-title">Find a home that fits the life you want.</h3>
               <p class="gd-small gd-module__text">Gia helps you explore housing options, compare possibilities, and understand what may fit your plans.</p>
-              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-homes">Explore Homes</button>
+              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-homes" aria-describedby="module-homes-title">Learn more</button>
             </article>
             <article class="gd-module gd-module--right">
               <p class="gd-module__label">CHAPTER 02</p>
               <p class="gd-eyebrow gd-module__eyebrow">UNDERSTAND YOUR FINANCES</p>
-              <h3 class="gd-module__title">See what’s possible before you decide what’s next.</h3>
+              <h3 class="gd-module__title" id="module-finances-title">See what’s possible before you decide what’s next.</h3>
               <p class="gd-small gd-module__text">Gia helps bring your financial picture, goals, and available options together so you can plan with more clarity.</p>
-              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-finances">Explore Your Options</button>
+              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-finances" aria-describedby="module-finances-title">Learn more</button>
             </article>
             <article class="gd-module gd-module--left">
               <p class="gd-module__label">CHAPTER 03</p>
               <p class="gd-eyebrow gd-module__eyebrow">PLAN A MOVE</p>
-              <h3 class="gd-module__title">Turn a move into a plan.</h3>
+              <h3 class="gd-module__title" id="module-moving-title">Turn a move into a plan.</h3>
               <p class="gd-small gd-module__text">Gia can help organize the steps around moving, property decisions, and what comes next.</p>
-              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-moving">Explore Moving</button>
+              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-moving" aria-describedby="module-moving-title">Learn more</button>
             </article>
             <article class="gd-module gd-module--right">
               <p class="gd-module__label">CHAPTER 04</p>
               <p class="gd-eyebrow gd-module__eyebrow">BUILD WHAT COMES NEXT</p>
-              <h3 class="gd-module__title">Your next opportunity may start with one conversation.</h3>
+              <h3 class="gd-module__title" id="module-possibilities-title">Your next opportunity may start with one conversation.</h3>
               <p class="gd-small gd-module__text">Explore business, travel, education, and other possibilities as they become part of your journey.</p>
-              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-possibilities">Explore Possibilities</button>
+              <button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-possibilities" aria-describedby="module-possibilities-title">Learn more</button>
             </article>
           </div>
 
@@ -255,19 +255,19 @@
           <div class="gd-brochure__column">
             <div class="gd-brochure__tags" data-brochure-intro>
               <span class="gd-brochure__tag">FIND A HOME</span>
-              <span class="gd-brochure__tag gd-brochure__tag--sky">GIA™ COMPANION</span>
+              <span class="gd-brochure__tag gd-brochure__tag--sky">CHAPTER 01</span>
             </div>
             <h2 class="gd-brochure__title" id="brochure-homes-title" tabindex="-1" data-brochure-intro>Find a home that fits the life you want.</h2>
-            <p class="gd-brochure__subtitle" data-brochure-intro>Gia strengthens communities, connecting residents to local resources and fostering collaboration.</p>
+            <p class="gd-brochure__subtitle" data-brochure-intro>Gia helps you explore homes, understand what fits your needs, and make clearer decisions about where and how you want to live.</p>
 
             <section class="gd-brochure__story" data-brochure-intro>
-              <h3 class="gd-h3">Your Companion.</h3>
-              <p>Gia is present in the quiet, everyday moments that define a life well-lived. She is the partner in your morning coffee, the listener during your afternoon walks, and the presence in your evening reflections.</p>
-              <p>She doesn’t demand attention; she rewards it, ensuring that even the simplest moments feel more connected and meaningful.</p>
+              <h3 class="gd-h3">A Home That Fits You.</h3>
+              <p>Gia can help you search for properties, compare options, research details, and keep track of the things that matter most to you.</p>
+              <p>With your permission, she can remember your preferences, your priorities, and the criteria you have already discussed, so you do not have to start from the beginning every time.</p>
               <ul class="gd-brochure__list gd-brochure__list--dots">
-                <li>Morning Reflections</li>
-                <li>Quiet Encouragement</li>
-                <li>Shared Memories</li>
+                <li>Property Discovery</li>
+                <li>Personal Preferences</li>
+                <li>Clearer Comparisons</li>
               </ul>
             </section>
 
@@ -276,29 +276,25 @@
             </figure>
 
             <section class="gd-brochure__story" data-brochure-reveal>
-              <h3 class="gd-h3">Families Stay Connected.</h3>
-              <p>Gia simplifies the complexity of modern family life, coordinating schedules, sharing memories, and ensuring that the people who matter most stay at the center of your world.</p>
+              <h3 class="gd-h3">Understand the Property.</h3>
+              <p>Gia can organize useful information about a home, including its condition, maintenance needs, improvements, local services, and nearby options.</p>
+              <p>Instead of giving you disconnected pieces of information, she helps bring the details together so you can understand the property in the context of your life.</p>
               <figure class="gd-quote">
-                <figcaption class="gd-quote__role">GIA™ COMPANION</figcaption>
-                <blockquote class="gd-quote__text"><p>“I’ve coordinated the family dinner for Saturday. Everyone is confirmed. Would you like me to share the photos from last year’s gathering to get everyone excited?”</p></blockquote>
-                <p class="gd-quote__outcome">Connection through coordination.</p>
+                <figcaption class="gd-quote__role">GIA</figcaption>
+                <blockquote class="gd-quote__text"><p>“I found a Glonari Home that fits the criteria we’ve been discussing.”</p></blockquote>
+                <p class="gd-quote__outcome">A better decision starts with a clearer picture.</p>
               </figure>
             </section>
 
             <section class="gd-brochure__story" data-brochure-reveal>
-              <h3 class="gd-h3">Communities Grow Stronger.</h3>
-              <p>Gia introduces members to local organizations, events, and opportunities that match their interests and goals. She helps everyone find their place and their people.</p>
-              <figure class="gd-quote">
-                <figcaption class="gd-quote__role">GIA™ CONNECTOR</figcaption>
-                <blockquote class="gd-quote__text"><p>“Welcome New Members! Gia is happy to introduce you both to the local community garden project starting this Saturday.”</p></blockquote>
-                <p class="gd-quote__outcome">Brighter futures through connection.</p>
-              </figure>
+              <h3 class="gd-h3">See the Home as Part of Your Life.</h3>
+              <p>A home is more than a property. It is part of the life you are building.</p>
+              <p>Gia can help you look at housing together with your resources, your lifestyle, and the plans you have for the future. The goal is not simply to find a place, but to understand what kind of home fits the life you want to create.</p>
             </section>
 
-            <p class="gd-brochure__closing" data-brochure-reveal>Through every stage, every dream, and every journey—Gia is there.</p>
             <div class="gd-brochure__actions" data-brochure-reveal>
-              <!-- TODO: destination for Talk to Gia (build spec Appendix B, item 1) -->
-              <a class="gd-button gd-button--primary" href="#">Talk to Gia</a>
+              <!-- TODO: destination for Explore Homes (build spec Appendix B, item 1) -->
+              <a class="gd-button gd-button--primary" href="#">Explore Homes</a>
               <button type="button" class="gd-button gd-button--secondary" data-brochure-close>Back to the story</button>
             </div>
           </div>
@@ -317,17 +313,17 @@
           <div class="gd-brochure__column">
             <div class="gd-brochure__tags" data-brochure-intro>
               <span class="gd-brochure__tag">UNDERSTAND YOUR FINANCES</span>
-              <span class="gd-brochure__tag gd-brochure__tag--sky">GIA™ COACH</span>
+              <span class="gd-brochure__tag gd-brochure__tag--sky">CHAPTER 02</span>
             </div>
-            <h2 class="gd-brochure__title" id="brochure-finances-title" tabindex="-1" data-brochure-intro>See what’s possible before you decide what’s next.</h2>
-            <p class="gd-brochure__subtitle" data-brochure-intro>Gia helps you become stronger physically, emotionally, financially, and professionally. She identifies patterns, suggests improvements, and celebrates your progress.</p>
+            <h2 class="gd-brochure__title" id="brochure-finances-title" tabindex="-1" data-brochure-intro>Understand what your resources can provide before deciding what comes next.</h2>
+            <p class="gd-brochure__subtitle" data-brochure-intro>Gia helps bring your financial picture together, so you can see not only what you have, but what it may support in your life.</p>
 
             <section class="gd-brochure__story" data-brochure-intro>
-              <h3 class="gd-h3">Your Coach.</h3>
+              <h3 class="gd-h3">See the Bigger Picture.</h3>
+              <p>Gia can help organize your available resources in one place and make them easier to understand.</p>
+              <p>Instead of focusing only on balances or isolated numbers, she helps translate them into practical questions about your everyday life, housing, experiences, and future plans.</p>
               <figure class="gd-quote">
-                <figcaption class="gd-quote__role">GIA™ COACH</figcaption>
-                <blockquote class="gd-quote__text"><p>“You’ve maintained your focus for three hours, David. Based on your goals, now is the perfect time for a 10-minute mental reset. Shall I pause your notifications?”</p></blockquote>
-                <p class="gd-quote__outcome">Strength through discipline.</p>
+                <blockquote class="gd-quote__text"><p>“What can all of this provide for my life?”</p></blockquote>
               </figure>
             </section>
 
@@ -336,24 +332,31 @@
             </figure>
 
             <section class="gd-brochure__story" data-brochure-reveal>
-              <h3 class="gd-h3">Built on Trust.</h3>
-              <h4 class="gd-brochure__subhead">Privacy by Design</h4>
-              <p>Gia operates with absolute respect for your privacy. Your data is your own, protected by world-class security and used only to serve you.</p>
-              <h4 class="gd-brochure__subhead">Unwavering Security</h4>
-              <p>We utilize the most advanced encryption and security protocols to ensure that your relationship with Gia remains private and protected.</p>
+              <h3 class="gd-h3">Understand Your Capacity.</h3>
+              <p>Gia can help you look at your finances in the context of the way you actually live.</p>
+              <p>With your permission, she can take into account your current lifestyle, recurring costs, housing expenses, and other resources to help you understand how long they may support the life you have defined.</p>
+              <ul class="gd-brochure__list gd-brochure__list--dots">
+                <li>Everyday Life</li>
+                <li>Housing</li>
+                <li>Experiences</li>
+                <li>Reserve Strength</li>
+              </ul>
+              <figure class="gd-quote">
+                <figcaption class="gd-quote__role">GIA</figcaption>
+                <blockquote class="gd-quote__text"><p>“At your current lifestyle and resources, your estimated Living Capacity is 14.7 years.”</p></blockquote>
+              </figure>
             </section>
-            <!-- TODO: copy needed — optional Digital Banker paragraph and link -->
 
             <section class="gd-brochure__story" data-brochure-reveal>
-              <h3 class="gd-h3">Human-Centered by Design.</h3>
-              <p>At Glonari, we believe that technology is at its best when it disappears. Gia is designed to fade into the background of your life, surfacing only when she can make a moment more meaningful, a decision clearer, or a relationship stronger.</p>
-              <p>We don’t build platforms; we build experiences. We don’t design dashboards; we design for better living.</p>
+              <h3 class="gd-h3">Explore What Changes.</h3>
+              <p>Gia can help you explore different possibilities before you make a decision.</p>
+              <p>You can ask what happens if your housing costs change, if your recurring expenses are reduced, or if additional resources become available. Gia can help model those changes conversationally and show how they may affect the bigger picture.</p>
+              <p>She can also help identify savings, better offers, smarter purchases, and ways to reduce recurring expenses.</p>
             </section>
 
-            <p class="gd-brochure__closing" data-brochure-reveal>Gia is the heartbeat of every Glonari experience.</p>
             <div class="gd-brochure__actions" data-brochure-reveal>
-              <!-- TODO: destination for Talk to Gia (build spec Appendix B, item 1) -->
-              <a class="gd-button gd-button--primary" href="#">Talk to Gia</a>
+              <!-- TODO: destination for Explore Your Options (build spec Appendix B, item 1) -->
+              <a class="gd-button gd-button--primary" href="#">Explore Your Options</a>
               <button type="button" class="gd-button gd-button--secondary" data-brochure-close>Back to the story</button>
             </div>
           </div>
@@ -372,18 +375,17 @@
           <div class="gd-brochure__column">
             <div class="gd-brochure__tags" data-brochure-intro>
               <span class="gd-brochure__tag">PLAN A MOVE</span>
-              <span class="gd-brochure__tag gd-brochure__tag--sky">GIA™ GUARDIAN</span>
+              <span class="gd-brochure__tag gd-brochure__tag--sky">CHAPTER 03</span>
             </div>
-            <h2 class="gd-brochure__title" id="brochure-moving-title" tabindex="-1" data-brochure-intro>Turn a move into a plan.</h2>
-            <p class="gd-brochure__subtitle" data-brochure-intro>Life Brings Us New Beginnings.</p>
+            <h2 class="gd-brochure__title" id="brochure-moving-title" tabindex="-1" data-brochure-intro>Turn the next step into a clear plan.</h2>
+            <p class="gd-brochure__subtitle" data-brochure-intro>Gia helps you organize the decisions, information, and actions involved in moving from one home to the next.</p>
 
             <section class="gd-brochure__story" data-brochure-intro>
-              <p>A young student leaves home for the first time. Everything is unfamiliar—the campus, the routines, the expectations. While parents worry from a distance, the student feels the weight of a fresh start.</p>
-              <figure class="gd-quote">
-                <figcaption class="gd-quote__role">GIA™ COMPANION</figcaption>
-                <blockquote class="gd-quote__text"><p>“Good morning, Alex. I’ve identified three student organizations that match your interest in architecture. Would you like to see their meeting times for this week?”</p></blockquote>
-                <p class="gd-quote__outcome">Confidence instead of isolation.</p>
-              </figure>
+              <h3 class="gd-h3">Start With a Plan.</h3>
+              <p>Gia can help you move from a general idea to a more organized sequence of steps.</p>
+              <p>She can support planning, scheduling, research, communication, property discovery, and other multi-step tasks. With your permission, she can also remember what you have already decided and what still needs attention.</p>
+              <p>The process is simple:</p>
+              <p class="gd-brochure__process"><span class="gd-brochure__step">Understand</span> <span class="gd-brochure__arrow">→</span> <span class="gd-brochure__step">Plan</span> <span class="gd-brochure__arrow">→</span> <span class="gd-brochure__step">Ask Permission When Needed</span> <span class="gd-brochure__arrow">→</span> <span class="gd-brochure__step">Take Action</span> <span class="gd-brochure__arrow">→</span> <span class="gd-brochure__step">Monitor</span> <span class="gd-brochure__arrow">→</span> <span class="gd-brochure__step">Report Back</span></p>
             </section>
 
             <figure class="gd-brochure__figure" data-brochure-reveal>
@@ -391,20 +393,28 @@
             </figure>
 
             <section class="gd-brochure__story" data-brochure-reveal>
-              <h3 class="gd-h3">Your Guardian.</h3>
-              <p>Gia supports confidence across life’s most vulnerable moments. Whether it’s a late-night flight, caring for aging parents, or traveling alone, she is the quiet presence that ensures you are never truly isolated.</p>
-              <figure class="gd-quote">
-                <figcaption class="gd-quote__role">GIA™ GUARDIAN</figcaption>
-                <blockquote class="gd-quote__text"><p>“I’m right here with you, Elena. I’ve noted your location and have a direct line ready if you need it. You’re almost there.”</p></blockquote>
-                <p class="gd-quote__outcome">Protection through connection.</p>
-              </figure>
-              <p class="gd-quote__note">Gia knows your destination and is ready if something doesn’t feel right.</p>
+              <h3 class="gd-h3">Keep the Details Together.</h3>
+              <p>Moving involves many connected decisions.</p>
+              <p>Gia can help keep information in one place, connect the property search with your preferences, and help you stay focused on what you are trying to accomplish.</p>
+              <ul class="gd-brochure__list gd-brochure__list--dots">
+                <li>Planning</li>
+                <li>Scheduling</li>
+                <li>Property Research</li>
+                <li>Decision Tracking</li>
+              </ul>
+              <p>Rather than starting over in every conversation, Gia can use the context you have allowed her to remember and continue from where you left off.</p>
             </section>
 
-            <p class="gd-brochure__closing" data-brochure-reveal>Life is better when someone walks beside you.</p>
+            <section class="gd-brochure__story" data-brochure-reveal>
+              <h3 class="gd-h3">Move From Property to Home.</h3>
+              <p>Gia can help you evaluate property information, local services, maintenance considerations, and other details that affect your decision.</p>
+              <p>She can also help identify a home that matches the criteria you have already discussed.</p>
+              <p>The goal is to make the transition easier to understand, with the next step always clearer than the last.</p>
+            </section>
+
             <div class="gd-brochure__actions" data-brochure-reveal>
-              <!-- TODO: destination for Talk to Gia (build spec Appendix B, item 1) -->
-              <a class="gd-button gd-button--primary" href="#">Talk to Gia</a>
+              <!-- TODO: destination for Explore Moving (build spec Appendix B, item 1) -->
+              <a class="gd-button gd-button--primary" href="#">Explore Moving</a>
               <button type="button" class="gd-button gd-button--secondary" data-brochure-close>Back to the story</button>
             </div>
           </div>
@@ -423,20 +433,22 @@
           <div class="gd-brochure__column">
             <div class="gd-brochure__tags" data-brochure-intro>
               <span class="gd-brochure__tag">BUILD WHAT COMES NEXT</span>
-              <span class="gd-brochure__tag gd-brochure__tag--sky">GIA™ COACH</span>
+              <span class="gd-brochure__tag gd-brochure__tag--sky">CHAPTER 04</span>
             </div>
-            <h2 class="gd-brochure__title" id="brochure-possibilities-title" tabindex="-1" data-brochure-intro>Your next opportunity may start with one conversation.</h2>
-            <p class="gd-brochure__subtitle" data-brochure-intro>One Relationship. A Lifetime of Possibilities.</p>
+            <h2 class="gd-brochure__title" id="brochure-possibilities-title" tabindex="-1" data-brochure-intro>Your next possibility can begin with one conversation.</h2>
+            <p class="gd-brochure__subtitle" data-brochure-intro>Gia helps you look beyond one decision and explore the opportunities that may shape what comes next in your life.</p>
 
             <section class="gd-brochure__story" data-brochure-intro>
-              <h3 class="gd-h3">Dreams That Want to Grow.</h3>
-              <p>A business owner is building something meaningful. Days are full of decisions, risks, and uncertainty. The vision is clear, but the path is complex.</p>
-              <figure class="gd-quote">
-                <figcaption class="gd-quote__role">GIA™ COACH</figcaption>
-                <blockquote class="gd-quote__text"><p>“I’ve analyzed the latest market trends for your expansion. There’s a significant opportunity in the northeast sector. Would you like to review the data together?”</p></blockquote>
-                <p class="gd-quote__outcome">Complexity made manageable.</p>
-              </figure>
-              <p class="gd-quote__note">Gia helps organize information and surface patterns to support better decisions.</p>
+              <h3 class="gd-h3">More Than One Direction.</h3>
+              <p>Life does not move in one category at a time.</p>
+              <p>Gia can help across travel, work, business opportunities, relationships, personal planning, research, and other multi-step goals. You can continue working with the same assistant even when the task changes.</p>
+              <ul class="gd-brochure__list gd-brochure__list--dots">
+                <li>Travel</li>
+                <li>Work</li>
+                <li>Business</li>
+                <li>Relationships</li>
+                <li>New Experiences</li>
+              </ul>
             </section>
 
             <figure class="gd-brochure__figure" data-brochure-reveal>
@@ -444,52 +456,26 @@
             </figure>
 
             <section class="gd-brochure__story" data-brochure-reveal>
-              <h3 class="gd-h3">Your Teacher.</h3>
-              <p>Gia supports learning across every life stage, encouraging curiosity and providing the resources needed to master new skills or understand complex ideas.</p>
-              <p>She doesn’t just provide answers; she helps you ask better questions, reinforcing personal values and parental guidance.</p>
-              <ul class="gd-brochure__list gd-brochure__list--checks">
-                <li>Encourages lifelong curiosity</li>
-                <li>Reinforces personal and family values</li>
-                <li>Adapts to your unique learning style</li>
-              </ul>
+              <h3 class="gd-h3">Discover Relevant Opportunities.</h3>
+              <p>Gia can help identify possibilities that match your interests, needs, and goals.</p>
+              <p>This may include better offers, useful introductions, work opportunities, business opportunities, property opportunities, ways to save money, and other options available through the Glonari platform.</p>
+              <p>The aim is not to show you everything. It is to help you notice what may actually be relevant to you.</p>
             </section>
 
             <section class="gd-brochure__story" data-brochure-reveal>
-              <h3 class="gd-h3">Businesses Become More Human.</h3>
-              <p>Gia helps businesses communicate more personally, moving beyond transactions to build real relationships. She surfaces the details that matter, allowing owners to focus on the people they serve.</p>
+              <h3 class="gd-h3">One Conversation Can Open Another Door.</h3>
+              <p>A useful introduction can lead to a new home, a business opportunity, education, travel, a new connection, or another experience you had not considered before.</p>
+              <p>Gia helps you explore those possibilities while keeping your own priorities at the center.</p>
               <figure class="gd-quote">
-                <figcaption class="gd-quote__role">GIA™ BUSINESS</figcaption>
-                <blockquote class="gd-quote__text"><p>“David, your long-time customer Sarah is coming in today. It’s her anniversary next week. Would you like me to prepare a small gift for her?”</p></blockquote>
-                <p class="gd-quote__outcome">Relationships instead of transactions.</p>
+                <figcaption class="gd-quote__role">GIA</figcaption>
+                <blockquote class="gd-quote__text"><p>“You asked me to watch airfare to Tokyo. The price is now within your target.”</p></blockquote>
               </figure>
             </section>
 
-            <section class="gd-brochure__story" data-brochure-reveal>
-              <p class="gd-eyebrow">THE GLONARI EXPERIENCE COLLECTION</p>
-              <div class="gd-brochure__cards">
-                <div class="gd-brochure__card">
-                  <h4>Living</h4>
-                  <p class="gd-small">Gia coordinates your home, your health, and your daily experiences, creating more time for what matters.</p>
-                </div>
-                <div class="gd-brochure__card">
-                  <h4>Business</h4>
-                  <p class="gd-small">Gia humanizes your business, simplifying complexity and helping you build real relationships with customers.</p>
-                </div>
-                <div class="gd-brochure__card">
-                  <h4>Makers</h4>
-                  <p class="gd-small">Gia supports your journey as a Dream Maker, helping you create a legacy by helping others realize their dreams.</p>
-                </div>
-                <div class="gd-brochure__card">
-                  <h4>Housing</h4>
-                  <p class="gd-small">Gia strengthens communities, connecting residents to local resources and fostering collaboration.</p>
-                </div>
-              </div>
-            </section>
-
-            <p class="gd-brochure__closing" data-brochure-reveal>Wherever life takes you, Gia is there.</p>
+            <p class="gd-brochure__closing" data-brochure-reveal>One conversation. More possibilities.</p>
             <div class="gd-brochure__actions" data-brochure-reveal>
-              <!-- TODO: destination for Talk to Gia (build spec Appendix B, item 1) -->
-              <a class="gd-button gd-button--primary" href="#">Talk to Gia</a>
+              <!-- TODO: destination for Explore Possibilities (build spec Appendix B, item 1) -->
+              <a class="gd-button gd-button--primary" href="#">Explore Possibilities</a>
               <button type="button" class="gd-button gd-button--secondary" data-brochure-close>Back to the story</button>
             </div>
           </div>

@@ -62,7 +62,8 @@ Everything below is already prepared in the repository.
 /references/screen-3-target.png                     Screen 3 approved visual target (icons, glowing lines, orbit)
 /references/digital-banker-reference.png            Digital Banker dark visual reference (Screen 2 atmosphere)
 /references/oceanx-brochure-panel.png                Screen 4 brochure panel reference (open chapter on the reference site)
-/references/gia-brochure-source.pdf                 The Gia brochure — source of all brochure copy and images
+/references/gia-brochure-source.pdf                 The Gia brochure — source of the brochure images (its copy is retired)
+/references/brochure-copy.txt                       Designer-supplied brochure copy — source of all brochure copy (Section 5.4a)
 ```
 
 Video preparation already done (for the record, if a new cut is supplied):
@@ -125,7 +126,7 @@ All CTAs on this page are `<a class="gd-button …" href="#">` (destinations TOD
 
 ### 4.3 Terminology lock
 
-Use exactly: `Gia` · `Global Dream` · `Digital Banker` · `Glonari` · `GIA™` (only in brochure role labels: `GIA™ COMPANION`, `GIA™ GUARDIAN`, `GIA™ COACH`, `GIA™ CONNECTOR`, `GIA™ BUSINESS`). Gia is referred to as "she". Never call Gia "the bot", "assistant", or "chatbot" in copy, `alt`, or `aria-label` text.
+Use exactly: `Gia` · `Global Dream` · `Digital Banker` · `Glonari` · `Glonari Home` · `Living Capacity`. The brochure quote-card role label is `GIA` (no `™`). Gia is referred to as "she". Never call Gia "the bot", "assistant", or "chatbot" in copy, `alt`, or `aria-label` text.
 
 ### 4.4 Pinned sections
 
@@ -334,14 +335,16 @@ What not to reproduce: the dark ocean palette, white-on-dark text, pill buttons 
 - Eyebrow: eyebrow style, `--gd-gold-deep`, 12px below the label.
 - H3: `clamp(24px, 2.4vw, 34px)`, 600, line-height 1.15, 12px below eyebrow.
 - Text: small body, `--gd-text-secondary`, 12px below the H3.
-- Button: `<button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-…">`, 24px below text. It opens the module's side brochure (Section 5.4a).
+- Button: `<button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-…" aria-describedby="module-…-title">`, 24px below text. It opens the module's side brochure (Section 5.4a). The module H3 carries `id="module-{homes|finances|moving|possibilities}-title"`, so each identical `Learn more` button is described by its card's heading.
 
 | Module | Eyebrow | H3 | Text | Button | Opens |
 |---|---|---|---|---|---|
-| 4.1 | `FIND A HOME` | `Find a home that fits the life you want.` | `Gia helps you explore housing options, compare possibilities, and understand what may fit your plans.` | `Explore Homes` | `#brochure-homes` |
-| 4.2 | `UNDERSTAND YOUR FINANCES` | `See what’s possible before you decide what’s next.` | `Gia helps bring your financial picture, goals, and available options together so you can plan with more clarity.` | `Explore Your Options` | `#brochure-finances` |
-| 4.3 | `PLAN A MOVE` | `Turn a move into a plan.` | `Gia can help organize the steps around moving, property decisions, and what comes next.` | `Explore Moving` | `#brochure-moving` |
-| 4.4 | `BUILD WHAT COMES NEXT` | `Your next opportunity may start with one conversation.` | `Explore business, travel, education, and other possibilities as they become part of your journey.` | `Explore Possibilities` | `#brochure-possibilities` |
+| 4.1 | `FIND A HOME` | `Find a home that fits the life you want.` | `Gia helps you explore housing options, compare possibilities, and understand what may fit your plans.` | `Learn more` | `#brochure-homes` |
+| 4.2 | `UNDERSTAND YOUR FINANCES` | `See what’s possible before you decide what’s next.` | `Gia helps bring your financial picture, goals, and available options together so you can plan with more clarity.` | `Learn more` | `#brochure-finances` |
+| 4.3 | `PLAN A MOVE` | `Turn a move into a plan.` | `Gia can help organize the steps around moving, property decisions, and what comes next.` | `Learn more` | `#brochure-moving` |
+| 4.4 | `BUILD WHAT COMES NEXT` | `Your next opportunity may start with one conversation.` | `Explore business, travel, education, and other possibilities as they become part of your journey.` | `Learn more` | `#brochure-possibilities` |
+
+The four button labels were changed from the chapter action labels to `Learn more` on 2026-09-30; those labels now appear as each brochure's primary action (Section 5.4a.3).
 
 Headings on the page stay in order: H2 for the section (visually hidden, text `Gia in your life`), H3 per module, H2 for the final CTA. The visually hidden H2 uses the standard `.visually-hidden` utility.
 
@@ -381,11 +384,22 @@ The final CTA follows the same `inert` rule as the modules (clickable while its 
 
 **Reference.** `references/oceanx-brochure-panel.png` (screenshot of an open chapter panel on the reference site). What to reproduce: clicking a chapter's button opens a large panel that slides in from the right and covers almost the whole viewport, leaving a thin strip of the pinned story visible on the left. The panel is split in two: a tall media column on the left that stays in place, and a light reading column on the right that scrolls independently — tag chips, a very large title, a subtitle, body text, inline media, more body. A round close button sits at the top-right. What not to reproduce: OceanX copy, colours, map imagery, or video player.
 
-**Content source.** `references/gia-brochure-source.pdf` (the Gia brochure). All brochure copy below is transcribed from it verbatim, with only these approved typographic normalisations: straight and modifier apostrophes become `’`; Gia's quoted lines are rendered inside `“` `”` added by markup (the copy strings below carry no quote marks); PDF extraction artefacts are corrected to the visible text (`Confidence`, `late-night`, `Human-Centered`); outcome lines are stored in sentence case and uppercased with CSS. No other wording changes. The PDF-to-brochure mapping below is approved.
+**Content source.** `references/brochure-copy.txt` (designer-supplied, approved 2026-09-30). It fully replaces the earlier PDF-based copy, which is retired; the PDF (`references/gia-brochure-source.pdf`) remains the source of the brochure images only. All brochure copy below is used verbatim. Quoted lines keep the `“` `”` from the source file; outcome lines are stored in sentence case and uppercased with CSS.
+
+**Mapping from the copy file** (approved 2026-09-30):
+
+1. `CHAPTER 0n — NAME`: tag chip 1 = the chapter name (e.g. `FIND A HOME`), tag chip 2 = the chapter number (e.g. `CHAPTER 01`). The marker chip on the image keeps the chapter name.
+2. The first line after the chapter heading = title H2. The bold paragraph after it = subtitle.
+3. Each `###` heading = one story section (H3) with the paragraphs under it. Bulleted lists use the gold-bullet list.
+4. Quoted lines = the quote card. Gia's lines carry the role label `GIA`. The first quote in chapter 02 (`“What can all of this provide for my life?”`) is the visitor's own question and is shown in the card without a label. A bold line directly after a quote = that card's outcome line.
+5. The chapter 03 process line is one row of small step chips joined by arrows (Section 5.4a.2), wrapping on narrow widths; the arrows are text, so the whole sequence is read as one sentence.
+6. Chapter 04's `One conversation. More possibilities.` = the closing line. Chapters 01–03 have no closing line.
+7. The final bold line of each chapter = the brochure's primary action button (destination TODO), followed by `Back to the story`.
+8. Images and their positions are unchanged; the inline figure follows the first story section.
 
 #### 5.4a.1 Triggers (the buttons under the module text)
 
-- Every module has one real `<button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-…">` directly under its short text (labels in the Section 5.4 module table). It opens that module's brochure.
+- Every module has one real `<button type="button" class="gd-button gd-button--secondary gd-module__cta" aria-haspopup="dialog" aria-controls="brochure-…" aria-describedby="module-…-title">` directly under its short text (labels in the Section 5.4 module table). It opens that module's brochure.
 - The button carries a trailing 6px `--gd-gold` dot (`::after`, decorative), echoing the reference's "learn more" control. This is the only button on the page with a decorative mark (design-system Section 16.6).
 - Hit area at least 44px tall; `cursor: pointer`; hover: border `--gd-gold-deep` and the dot scales to 1.3 (200ms); focus ring per Section 4.2.
 - Clickable while the button itself is fully inside the stage, at every width (Section 5.4 `inert` rule).
@@ -405,9 +419,9 @@ dialog.gd-brochure
     div.gd-brochure__tags          (two chips)
     h2.gd-brochure__title
     p.gd-brochure__subtitle
-    section.gd-brochure__story  ×n (h3, paragraphs, optional list, optional quote card)
+    section.gd-brochure__story  ×n (h3, paragraphs, optional list, optional process row, optional quote card)
     figure.gd-brochure__figure     (inline image, after the first story section)
-    p.gd-brochure__closing
+    p.gd-brochure__closing         (brochure 4 only)
     div.gd-brochure__actions
 ```
 
@@ -429,19 +443,18 @@ dialog.gd-brochure
 | Subtitle | IBM Plex Sans 500, `clamp(22px, 2vw, 28px)`, line-height 1.3, `--gd-text-primary` | 32px after title |
 | Story H3 | H3 scale (design system 4.2) | 56px before, 16px after |
 | Paragraph | Body scale, `--gd-text-secondary` | 16px between paragraphs |
-| List | Small body, `--gd-text-primary`; 8px `--gd-gold` round bullet (companion list) or 12px gold check SVG (teacher list); row gap 10px | 24px after paragraph |
-| Sub-heading H4 (finances only) | 18px, 600, `--gd-gold-deep` | 24px before, 8px after |
+| List | Small body, `--gd-text-primary`; 8px `--gd-gold` round bullet; row gap 10px | 24px after paragraph; a paragraph after a list starts 24px below it |
+| Process row (brochure 3) | `<p class="gd-brochure__process">`: one chip per step (IBM Plex Mono 500, 12px, `--gd-text-primary`, `--gd-bg` fill, 1px `--gd-gold-line` border, radius 4px, padding 6px 10px), joined by `→` in `--gd-gold-deep`; flex row, gap 8px, wraps | 24px after paragraph |
 | Figure | `aspect-ratio: 16 / 10`, radius 6px, `object-fit: cover`, full column width | 48px before and after |
-| Closing line | Lead scale, `--gd-text-tertiary` | 64px before, after a 1px `--gd-line` rule |
-| Actions | `.gd-button--primary` `Talk to Gia` (approved label) + `.gd-button--secondary` `Back to the story` (closes the panel) | 32px after closing line |
+| Closing line (brochure 4 only) | Lead scale, `--gd-text-tertiary` | 64px before, after a 1px `--gd-line` rule |
+| Actions | `.gd-button--primary` with the brochure's action label (Section 5.4a.3, destination TODO) + `.gd-button--secondary` `Back to the story` (closes the panel) | 32px after the closing line; without one, 64px after the last story, above a 1px `--gd-line` rule with 32px padding |
 
-**Gia quote card** (`<figure class="gd-quote">` with `<figcaption>` for the role and `<blockquote>` for the line):
+**Quote card** (`<figure class="gd-quote">` with `<figcaption>` for the role and `<blockquote>` for the line):
 
 - `--gd-bg` background, 1px `--gd-gold-line` border, radius 8px, padding 28px 32px, 24px after the story paragraph.
-- Role label (`figcaption`, placed first visually): IBM Plex Mono 600, 11px, `0.1em`, uppercase, `--gd-text-primary`, e.g. `GIA™ COMPANION`.
-- Quote: IBM Plex Sans 400, 18px, line-height 1.6, `--gd-text-primary`, wrapped in `“ ”`, 12px after label.
-- Outcome line: 1px `--gd-line-soft` rule, then IBM Plex Mono 600, 12px, `0.08em`, uppercase via CSS, `--gd-gold-deep`, 16px padding-top.
-- Optional note under the card (where listed): caption scale, `--gd-text-tertiary`, 12px after the card.
+- Role label (`figcaption`, placed first visually): IBM Plex Mono 600, 11px, `0.1em`, uppercase, `--gd-text-primary`: `GIA` on Gia's lines. The visitor's own question (brochure 2) has no `figcaption`; its quote starts at the top of the card.
+- Quote: IBM Plex Sans 400, 18px, line-height 1.6, `--gd-text-primary`, with the `“ ”` from the copy, 12px after label.
+- Optional outcome line (where listed): 1px `--gd-line-soft` rule, then IBM Plex Mono 600, 12px, `0.08em`, uppercase via CSS, `--gd-gold-deep`, 16px padding-top.
 
 **Motion.**
 
@@ -468,115 +481,123 @@ Media files are in `media/brochures/` (extracted from the brochure PDF, resized,
 
 ---
 
-**Brochure 1 — `brochure-homes`** (opened by `Explore Homes`)
+**Brochure 1 — `brochure-homes`** (opened by the `Learn more` button on module 4.1)
 
 - Main image: `media/brochures/b-homes-main.webp` (1535×1024), `object-position: 30% 50%`, alt `A woman relaxing on her sofa with coffee, talking with Gia on a tablet`.
 - Marker chip: `FIND A HOME`
-- Tag chips: `FIND A HOME` · `GIA™ COMPANION`
+- Tag chips: `FIND A HOME` · `CHAPTER 01`
 - Title H2: `Find a home that fits the life you want.`
-- Subtitle: `Gia strengthens communities, connecting residents to local resources and fostering collaboration.`
+- Subtitle: `Gia helps you explore homes, understand what fits your needs, and make clearer decisions about where and how you want to live.`
 
-Story 1 — H3 `Your Companion.`
-- P: `Gia is present in the quiet, everyday moments that define a life well-lived. She is the partner in your morning coffee, the listener during your afternoon walks, and the presence in your evening reflections.`
-- P: `She doesn’t demand attention; she rewards it, ensuring that even the simplest moments feel more connected and meaningful.`
-- List (gold bullets): `Morning Reflections` · `Quiet Encouragement` · `Shared Memories`
+Story 1 — H3 `A Home That Fits You.`
+- P: `Gia can help you search for properties, compare options, research details, and keep track of the things that matter most to you.`
+- P: `With your permission, she can remember your preferences, your priorities, and the criteria you have already discussed, so you do not have to start from the beginning every time.`
+- List (gold bullets): `Property Discovery` · `Personal Preferences` · `Clearer Comparisons`
 
 Figure: `media/brochures/b-homes-inline.webp` (1176×1024), `object-position: 50% 55%`, alt `A family gathered around an outdoor dinner table at night, with a tablet showing a message from Gia`.
 
-Story 2 — H3 `Families Stay Connected.`
-- P: `Gia simplifies the complexity of modern family life, coordinating schedules, sharing memories, and ensuring that the people who matter most stay at the center of your world.`
-- Quote card — role `GIA™ COMPANION`; quote `I’ve coordinated the family dinner for Saturday. Everyone is confirmed. Would you like me to share the photos from last year’s gathering to get everyone excited?`; outcome `Connection through coordination.`
+Story 2 — H3 `Understand the Property.`
+- P: `Gia can organize useful information about a home, including its condition, maintenance needs, improvements, local services, and nearby options.`
+- P: `Instead of giving you disconnected pieces of information, she helps bring the details together so you can understand the property in the context of your life.`
+- Quote card — role `GIA`; quote `“I found a Glonari Home that fits the criteria we’ve been discussing.”`; outcome `A better decision starts with a clearer picture.`
 
-Story 3 — H3 `Communities Grow Stronger.`
-- P: `Gia introduces members to local organizations, events, and opportunities that match their interests and goals. She helps everyone find their place and their people.`
-- Quote card — role `GIA™ CONNECTOR`; quote `Welcome New Members! Gia is happy to introduce you both to the local community garden project starting this Saturday.`; outcome `Brighter futures through connection.`
+Story 3 — H3 `See the Home as Part of Your Life.`
+- P: `A home is more than a property. It is part of the life you are building.`
+- P: `Gia can help you look at housing together with your resources, your lifestyle, and the plans you have for the future. The goal is not simply to find a place, but to understand what kind of home fits the life you want to create.`
 
-Closing line: `Through every stage, every dream, and every journey—Gia is there.`
+Primary action: `Explore Homes`
 
 ---
 
-**Brochure 2 — `brochure-finances`** (opened by `Explore Your Options`)
+**Brochure 2 — `brochure-finances`** (opened by the `Learn more` button on module 4.2)
 
 - Main image: `media/brochures/b-finances-main.webp` (1536×1024), `object-position: 22% 50%` (keeps the tablet in frame), alt `A woman holding a tablet showing Gia and a privacy screen that reads You’re in control`.
 - Marker chip: `UNDERSTAND YOUR FINANCES`
-- Tag chips: `UNDERSTAND YOUR FINANCES` · `GIA™ COACH`
-- Title H2: `See what’s possible before you decide what’s next.`
-- Subtitle: `Gia helps you become stronger physically, emotionally, financially, and professionally. She identifies patterns, suggests improvements, and celebrates your progress.`
+- Tag chips: `UNDERSTAND YOUR FINANCES` · `CHAPTER 02`
+- Title H2: `Understand what your resources can provide before deciding what comes next.`
+- Subtitle: `Gia helps bring your financial picture together, so you can see not only what you have, but what it may support in your life.`
 
-Story 1 — H3 `Your Coach.`
-- Quote card — role `GIA™ COACH`; quote `You’ve maintained your focus for three hours, David. Based on your goals, now is the perfect time for a 10-minute mental reset. Shall I pause your notifications?`; outcome `Strength through discipline.`
+Story 1 — H3 `See the Bigger Picture.`
+- P: `Gia can help organize your available resources in one place and make them easier to understand.`
+- P: `Instead of focusing only on balances or isolated numbers, she helps translate them into practical questions about your everyday life, housing, experiences, and future plans.`
+- Quote card — no label (the visitor’s own question); quote `“What can all of this provide for my life?”`
 
 Figure: `media/brochures/b-finances-inline.webp` (1024×683), `object-position: 60% 50%`, alt `Two children walking hand in hand along a rocky shore at sunset`.
 
-Story 2 — H3 `Built on Trust.`
-- H4 `Privacy by Design` — P: `Gia operates with absolute respect for your privacy. Your data is your own, protected by world-class security and used only to serve you.`
-- H4 `Unwavering Security` — P: `We utilize the most advanced encryption and security protocols to ensure that your relationship with Gia remains private and protected.`
+Story 2 — H3 `Understand Your Capacity.`
+- P: `Gia can help you look at your finances in the context of the way you actually live.`
+- P: `With your permission, she can take into account your current lifestyle, recurring costs, housing expenses, and other resources to help you understand how long they may support the life you have defined.`
+- List (gold bullets): `Everyday Life` · `Housing` · `Experiences` · `Reserve Strength`
+- Quote card — role `GIA`; quote `“At your current lifestyle and resources, your estimated Living Capacity is 14.7 years.”`
 
-Story 3 — H3 `Human-Centered by Design.`
-- P: `At Glonari, we believe that technology is at its best when it disappears. Gia is designed to fade into the background of your life, surfacing only when she can make a moment more meaningful, a decision clearer, or a relationship stronger.`
-- P: `We don’t build platforms; we build experiences. We don’t design dashboards; we design for better living.`
+Story 3 — H3 `Explore What Changes.`
+- P: `Gia can help you explore different possibilities before you make a decision.`
+- P: `You can ask what happens if your housing costs change, if your recurring expenses are reduced, or if additional resources become available. Gia can help model those changes conversationally and show how they may affect the bigger picture.`
+- P: `She can also help identify savings, better offers, smarter purchases, and ways to reduce recurring expenses.`
 
-Closing line: `Gia is the heartbeat of every Glonari experience.`
-
-Open item: the brief asks this brochure to touch on Digital Banker. The PDF has no Digital Banker copy; add `<!-- TODO: copy needed — optional Digital Banker paragraph and link -->` after Story 2.
+Primary action: `Explore Your Options`
 
 ---
 
-**Brochure 3 — `brochure-moving`** (opened by `Explore Moving`)
+**Brochure 3 — `brochure-moving`** (opened by the `Learn more` button on module 4.3)
 
 - Main image: `media/brochures/b-moving-main.webp` (1040×1064), `object-position: 40% 50%`, alt `A woman with long hair walking down a sunlit city street`.
 - Marker chip: `PLAN A MOVE`
-- Tag chips: `PLAN A MOVE` · `GIA™ GUARDIAN`
-- Title H2: `Turn a move into a plan.`
-- Subtitle: `Life Brings Us New Beginnings.`
+- Tag chips: `PLAN A MOVE` · `CHAPTER 03`
+- Title H2: `Turn the next step into a clear plan.`
+- Subtitle: `Gia helps you organize the decisions, information, and actions involved in moving from one home to the next.`
 
-Story 1 — no H3 (the subtitle introduces it)
-- P: `A young student leaves home for the first time. Everything is unfamiliar—the campus, the routines, the expectations. While parents worry from a distance, the student feels the weight of a fresh start.`
-- Quote card — role `GIA™ COMPANION`; quote `Good morning, Alex. I’ve identified three student organizations that match your interest in architecture. Would you like to see their meeting times for this week?`; outcome `Confidence instead of isolation.`
+Story 1 — H3 `Start With a Plan.`
+- P: `Gia can help you move from a general idea to a more organized sequence of steps.`
+- P: `She can support planning, scheduling, research, communication, property discovery, and other multi-step tasks. With your permission, she can also remember what you have already decided and what still needs attention.`
+- P: `The process is simple:`
+- Process row (step chips): `Understand → Plan → Ask Permission When Needed → Take Action → Monitor → Report Back`
 
 Figure: `media/brochures/b-moving-inline.webp` (1536×1024), `object-position: 35% 40%`, alt `A young professional walking calmly through a parking structure at night, wearing an earbud`.
 
-Story 2 — H3 `Your Guardian.`
-- P: `Gia supports confidence across life’s most vulnerable moments. Whether it’s a late-night flight, caring for aging parents, or traveling alone, she is the quiet presence that ensures you are never truly isolated.`
-- Quote card — role `GIA™ GUARDIAN`; quote `I’m right here with you, Elena. I’ve noted your location and have a direct line ready if you need it. You’re almost there.`; outcome `Protection through connection.`
-- Note under card: `Gia knows your destination and is ready if something doesn’t feel right.`
+Story 2 — H3 `Keep the Details Together.`
+- P: `Moving involves many connected decisions.`
+- P: `Gia can help keep information in one place, connect the property search with your preferences, and help you stay focused on what you are trying to accomplish.`
+- List (gold bullets): `Planning` · `Scheduling` · `Property Research` · `Decision Tracking`
+- P: `Rather than starting over in every conversation, Gia can use the context you have allowed her to remember and continue from where you left off.`
 
-Closing line: `Life is better when someone walks beside you.`
+Story 3 — H3 `Move From Property to Home.`
+- P: `Gia can help you evaluate property information, local services, maintenance considerations, and other details that affect your decision.`
+- P: `She can also help identify a home that matches the criteria you have already discussed.`
+- P: `The goal is to make the transition easier to understand, with the next step always clearer than the last.`
+
+Primary action: `Explore Moving`
 
 ---
 
-**Brochure 4 — `brochure-possibilities`** (opened by `Explore Possibilities`)
+**Brochure 4 — `brochure-possibilities`** (opened by the `Learn more` button on module 4.4)
 
 - Main image: `media/brochures/b-possibilities-main.webp` (1536×1024), `object-position: 32% 50%`, alt `A business owner smiling while taking notes during a video call with Gia`.
 - Marker chip: `BUILD WHAT COMES NEXT`
-- Tag chips: `BUILD WHAT COMES NEXT` · `GIA™ COACH`
-- Title H2: `Your next opportunity may start with one conversation.`
-- Subtitle: `One Relationship. A Lifetime of Possibilities.`
+- Tag chips: `BUILD WHAT COMES NEXT` · `CHAPTER 04`
+- Title H2: `Your next possibility can begin with one conversation.`
+- Subtitle: `Gia helps you look beyond one decision and explore the opportunities that may shape what comes next in your life.`
 
-Story 1 — H3 `Dreams That Want to Grow.`
-- P: `A business owner is building something meaningful. Days are full of decisions, risks, and uncertainty. The vision is clear, but the path is complex.`
-- Quote card — role `GIA™ COACH`; quote `I’ve analyzed the latest market trends for your expansion. There’s a significant opportunity in the northeast sector. Would you like to review the data together?`; outcome `Complexity made manageable.`
-- Note under card: `Gia helps organize information and surface patterns to support better decisions.`
+Story 1 — H3 `More Than One Direction.`
+- P: `Life does not move in one category at a time.`
+- P: `Gia can help across travel, work, business opportunities, relationships, personal planning, research, and other multi-step goals. You can continue working with the same assistant even when the task changes.`
+- List (gold bullets): `Travel` · `Work` · `Business` · `Relationships` · `New Experiences`
 
 Figure: `media/brochures/b-possibilities-inline.webp` (1536×1024), `object-position: 40% 45%`, alt `A café owner studying on a tablet while writing notes`.
 
-Story 2 — H3 `Your Teacher.`
-- P: `Gia supports learning across every life stage, encouraging curiosity and providing the resources needed to master new skills or understand complex ideas.`
-- P: `She doesn’t just provide answers; she helps you ask better questions, reinforcing personal values and parental guidance.`
-- List (gold checks): `Encourages lifelong curiosity` · `Reinforces personal and family values` · `Adapts to your unique learning style`
+Story 2 — H3 `Discover Relevant Opportunities.`
+- P: `Gia can help identify possibilities that match your interests, needs, and goals.`
+- P: `This may include better offers, useful introductions, work opportunities, business opportunities, property opportunities, ways to save money, and other options available through the Glonari platform.`
+- P: `The aim is not to show you everything. It is to help you notice what may actually be relevant to you.`
 
-Story 3 — H3 `Businesses Become More Human.`
-- P: `Gia helps businesses communicate more personally, moving beyond transactions to build real relationships. She surfaces the details that matter, allowing owners to focus on the people they serve.`
-- Quote card — role `GIA™ BUSINESS`; quote `David, your long-time customer Sarah is coming in today. It’s her anniversary next week. Would you like me to prepare a small gift for her?`; outcome `Relationships instead of transactions.`
+Story 3 — H3 `One Conversation Can Open Another Door.`
+- P: `A useful introduction can lead to a new home, a business opportunity, education, travel, a new connection, or another experience you had not considered before.`
+- P: `Gia helps you explore those possibilities while keeping your own priorities at the center.`
+- Quote card — role `GIA`; quote `“You asked me to watch airfare to Tokyo. The price is now within your target.”`
 
-Story 4 — eyebrow `THE GLONARI EXPERIENCE COLLECTION` (eyebrow style, `--gd-gold-deep`), then a 2×2 grid (1 column below 600px) of four small cards (`--gd-bg`, 1px `--gd-line`, radius 8px, padding 24px), each an H4 in `--gd-gold-deep` plus small body:
-- `Living` — `Gia coordinates your home, your health, and your daily experiences, creating more time for what matters.`
-- `Business` — `Gia humanizes your business, simplifying complexity and helping you build real relationships with customers.`
-- `Makers` — `Gia supports your journey as a Dream Maker, helping you create a legacy by helping others realize their dreams.`
-- `Housing` — `Gia strengthens communities, connecting residents to local resources and fostering collaboration.`
+Closing line: `One conversation. More possibilities.`
 
-Closing line: `Wherever life takes you, Gia is there.`
-
+Primary action: `Explore Possibilities`
 
 ---
 
@@ -685,12 +706,13 @@ Weight budget: videos ~15.8MB (hero ~5.5MB, walk ~10.3MB), brochure images ~0.7M
 
 Approved on 2026-09-28: every item previously marked PROPOSED (Screen 3 `GIA` live marker; Screen 4 `CHAPTER 01–04` labels and hidden H2 `Gia in your life`; brochure mapping, `Close`, `Back to the story`, deep links; all site-shell copy) and the official logo.
 
+Approved on 2026-09-30: the designer-supplied brochure copy (`references/brochure-copy.txt`) and its mapping (Section 5.4a), replacing the PDF-based brochure copy; module buttons labelled `Learn more`. The optional Digital Banker paragraph in the finances brochure is no longer an open item.
+
 Still open (the build does not wait for them — each is a TODO in place):
 
-1. Destinations for `Meet Gia`, `Talk to Gia`, `Explore with Gia`, and brochure CTAs.
+1. Destinations for `Meet Gia`, `Talk to Gia`, `Explore with Gia`, and the brochure primary actions (`Explore Homes`, `Explore Your Options`, `Explore Moving`, `Explore Possibilities`).
 2. Footer legal line.
-3. Optional Digital Banker paragraph and link in the finances brochure.
-4. A larger version of the New Beginnings student photo (the PDF copy is 400px, so it is not used). Usage rights for the brochure photography to be confirmed. Gia's face in the brochure photos differs from the Gia in the page videos and tablet image.
-5. A vector (SVG) or higher-resolution version of the logo. The supplied PNG is 1024px wide: enough for the header and a 420px footer on 2x screens, not for larger uses.
-6. Optional: a version of the tablet image without baked call controls.
-7. Optional: a longer walk video (12–16s) with a real camera pull-back at the end.
+3. A larger version of the New Beginnings student photo (the PDF copy is 400px, so it is not used). Usage rights for the brochure photography to be confirmed. Gia's face in the brochure photos differs from the Gia in the page videos and tablet image.
+4. A vector (SVG) or higher-resolution version of the logo. The supplied PNG is 1024px wide: enough for the header and a 420px footer on 2x screens, not for larger uses.
+5. Optional: a version of the tablet image without baked call controls.
+6. Optional: a longer walk video (12–16s) with a real camera pull-back at the end.
