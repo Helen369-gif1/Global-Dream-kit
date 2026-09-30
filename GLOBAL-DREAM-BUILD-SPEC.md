@@ -326,7 +326,7 @@ What not to reproduce: the dark ocean palette, white-on-dark text, pill buttons 
 
 **Zone geometry** (approved 2026-09-30, resolves the conflict between the right zone and the card width). The zones are measured from the stage edge inset by the page padding (`--gd-page-pad`), not from the 1200px container. A card is `min(440px, 34%)` of the stage width and never wider than its zone: left cards `min(440px, 34%, 38% − pad)` starting at the inset left edge; right cards `min(440px, 34%, 28% − pad)` ending at the inset right edge. Below a 1400px stage width the right zone is narrower than 340px, so every module uses the left zone.
 
-**Module positions.** Alternate zones: 4.1 left, 4.2 right, 4.3 left, 4.4 right (all left below 1400px, see above). Vertical anchor: module top at `46%` of the stage height (below the rooflines, over the plaza and building base). If a card would then run into the 96px reserved above the stage bottom for the chapter counter, it moves up just enough to clear it.
+**Module positions.** Alternate zones: 4.1 left, 4.2 right, 4.3 left, 4.4 right (all left below 1400px, see above). Vertical anchor: module top at `46%` of the stage height (below the rooflines, over the plaza and building base). All four cards share one top: if the tallest card would then run into the 96px reserved above the stage bottom for the chapter counter, the shared top moves up just enough for that card to clear it, and the shorter cards move up with it (approved 2026-09-30).
 
 **Module component** (`<article class="gd-module">`):
 
@@ -374,7 +374,7 @@ The final CTA follows the same `inert` rule as the modules (clickable while its 
 
 **Reduced motion, and short viewports** (`prefers-reduced-motion: reduce` or `max-height: 560px`): no runway, no pin, no scrub. Screen 4 becomes a normal section: `gd-walk-poster.jpg` as a full-bleed band (`aspect-ratio: 16/9`, max-height 80svh, `object-fit: cover`), then the four modules as a normal 2×2 grid (1 column below 768px) on `--gd-bg`, then the final CTA centred in a CTA composition (design system 7.3). Brochures work the same, without animation. Chrome hidden.
 
-**Mobile (768px and below, normal motion).** Keep the pin and scrub. Modules and the final CTA dock to the bottom of the stage: full container width, `bottom: calc(24px + env(safe-area-inset-bottom))`, card padding 24px, H3 `clamp(22px, 6vw, 26px)`; the horizontal travel is the same. The final CTA card docks to the bottom like the modules. Video `object-position: 55% 40%` so Gia sits above the cards. Counter moves to the top-left under the progress line, on the small dark chip from design-system 16.2 (26px tall, `--gd-text-primary` at 55%, radius 4px, light `--gd-surface` text, count and ticks on one row).
+**Mobile (768px and below, normal motion).** Keep the pin and scrub. Modules and the final CTA dock to the bottom of the stage: full container width, `bottom: calc(24px + env(safe-area-inset-bottom))`. The modules share one top, set by the tallest card, so only the tallest card sits exactly at that bottom offset and shorter cards end slightly higher (approved 2026-09-30). Card padding 24px, H3 `clamp(22px, 6vw, 26px)`; the horizontal travel is the same. The final CTA card docks to the bottom like the modules. Video `object-position: 55% 40%` so Gia sits above the cards. Counter moves to the top-left under the progress line, on the small dark chip from design-system 16.2 (26px tall, `--gd-text-primary` at 55%, radius 4px, light `--gd-surface` text, count and ticks on one row).
 
 **Missing video.** Poster as a static background, the card track still runs on scroll.
 
@@ -384,7 +384,7 @@ The final CTA follows the same `inert` rule as the modules (clickable while its 
 
 **Reference.** `references/oceanx-brochure-panel.png` (screenshot of an open chapter panel on the reference site). What to reproduce: clicking a chapter's button opens a large panel that slides in from the right and covers almost the whole viewport, leaving a thin strip of the pinned story visible on the left. The panel is split in two: a tall media column on the left that stays in place, and a light reading column on the right that scrolls independently — tag chips, a very large title, a subtitle, body text, inline media, more body. A round close button sits at the top-right. What not to reproduce: OceanX copy, colours, map imagery, or video player.
 
-**Content source.** `references/brochure-copy.txt` (designer-supplied, approved 2026-09-30). It fully replaces the earlier PDF-based copy, which is retired; the PDF (`references/gia-brochure-source.pdf`) remains the source of the brochure images only. All brochure copy below is used verbatim. Quoted lines keep the `“` `”` from the source file; outcome lines are stored in sentence case and uppercased with CSS.
+**Content source.** `references/brochure-copy.txt` (designer-supplied, approved 2026-09-30). It fully replaces the earlier PDF-based copy, which is retired; the PDF (`references/gia-brochure-source.pdf`) remains the source of the brochure images only. All brochure copy below is used verbatim. One approved exception: in brochure 4, Story 1, the source's `the same assistant` is replaced by `Gia` (terminology lock, Section 4.3). Quoted lines keep the `“` `”` from the source file; outcome lines are stored in sentence case and uppercased with CSS.
 
 **Mapping from the copy file** (approved 2026-09-30):
 
@@ -580,7 +580,7 @@ Primary action: `Explore Moving`
 
 Story 1 — H3 `More Than One Direction.`
 - P: `Life does not move in one category at a time.`
-- P: `Gia can help across travel, work, business opportunities, relationships, personal planning, research, and other multi-step goals. You can continue working with the same assistant even when the task changes.`
+- P: `Gia can help across travel, work, business opportunities, relationships, personal planning, research, and other multi-step goals. You can continue working with Gia even when the task changes.`
 - List (gold bullets): `Travel` · `Work` · `Business` · `Relationships` · `New Experiences`
 
 Figure: `media/brochures/b-possibilities-inline.webp` (1536×1024), `object-position: 40% 45%`, alt `A café owner studying on a tablet while writing notes`.
@@ -658,7 +658,7 @@ Weight budget: videos ~15.8MB (hero ~5.5MB, walk ~10.3MB), brochure images ~0.7M
 - [ ] Screen 1 scrubs smoothly, text blocks never overlap, block 3 and `Meet Gia` hold to the end, the button is only interactive when visible.
 - [ ] Screen 2 is the only dark section; its rail completes once and its ambient dot pauses off-screen.
 - [ ] Screen 3 areas appear in order 1–5, lines stay attached to the tablet at every width above 1100px, and the stacked layout replaces lines below it.
-- [ ] Screen 4 matches the reference mechanics: scrubbed walking video, chapters on one continuous track entering from the right and exiting to the left, progress line, counter, simulated pull-back, final CTA with no exit. Nothing ever covers Gia's safe band.
+- [ ] Screen 4 matches the reference mechanics: scrubbed walking video, chapters on one continuous track entering from the right and exiting to the left, progress line, counter, simulated pull-back, final CTA with no exit. Chapter cards cross Gia's safe band only while moving; the final CTA card at rest stays clear of it.
 - [ ] Every module button under the text opens its brochure; the panel slides in from the right leaving a strip of the story visible, media column fixed, body column scrolling; copy matches 5.4a.3; story freezes while open; Escape/backdrop/close work; focus returns; scroll position is restored exactly.
 - [ ] Reduced motion and `max-height: 560px` produce the static layouts specified.
 - [ ] Layout correct at 1920, 1440, 1024, 768, 375; no horizontal page scroll.

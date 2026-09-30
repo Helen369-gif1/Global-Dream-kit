@@ -458,6 +458,14 @@ html.is-brochure-open body {
   to { opacity: 0; }
 }
 
+/* Reduced motion: the backdrop appears and disappears instantly. */
+@media (prefers-reduced-motion: reduce) {
+  .gd-brochure[open]::backdrop,
+  .gd-brochure.is-closing::backdrop {
+    animation: none;
+  }
+}
+
 /* ---------- Close button ---------- */
 
 .gd-brochure__close {
